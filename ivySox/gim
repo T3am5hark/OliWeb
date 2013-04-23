@@ -1,0 +1,4 @@
+echo 'Building OliWeb:'
+g++ -I'../tinyxml' -pthread -lpthread -std=c++0x -o OliWeb IvySox.cpp main.cpp ../tinyxml/tinyxml2.cpp OliWeb.cpp
+
+
