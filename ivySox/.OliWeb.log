@@ -1,0 +1,747 @@
+[2013-3-27 15:37:33]  ******************
+[2013-3-27 15:37:33]  ** OliWeb 1.0.0 **
+[2013-3-27 15:37:33]  ******************
+[2013-3-27 15:37:33]  Opening OliWebConfig.xml
+[2013-3-27 15:37:33]  Parsing XML (tinyxml2)
+[2013-3-27 15:37:33]  Errorcode = 0
+[2013-3-27 15:37:33]  Reading configuration parameters
+[2013-3-27 15:37:33]  PortNumber = 8197
+[2013-3-27 15:37:33]  RootFileDirectory = web
+[2013-3-27 15:37:33]  DefaultFileName = index.html
+[2013-3-27 15:37:33]  FileNotFoundPage = oops404.html
+[2013-3-27 15:37:33]  ScriptDirectory = bin
+[2013-3-27 15:37:33]  Opening port 8197
+[2013-3-27 15:37:33]  Listening on port 8197...
+[2013-3-27 15:37:33]  Waiting for inbound request.
+[2013-3-27 15:37:40]  Received inbound request from 192.168.1.116
+GET /index.html HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:37:40]  (340 bytes)
+[2013-3-27 15:37:40]  Checking for web/index.html
+[2013-3-27 15:37:40]  Sending web/index.html
+[2013-3-27 15:37:40]  Sent 930 bytes.
+[2013-3-27 15:37:40]  Waiting for inbound request.
+[2013-3-27 15:37:40]  Received inbound request from 192.168.1.116
+GET /piLogo.png HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: */*
+Referer: http://192.168.1.124:8197/index.html
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:37:40]  (327 bytes)
+[2013-3-27 15:37:40]  Checking for web/piLogo.png
+[2013-3-27 15:37:40]  Sending web/piLogo.png
+[2013-3-27 15:37:40]  Sent 3277 bytes.
+[2013-3-27 15:37:40]  Waiting for inbound request.
+[2013-3-27 15:37:40]  Received inbound request from 192.168.1.116
+GET /BigMap.png HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: */*
+Referer: http://192.168.1.124:8197/index.html
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:37:40]  (327 bytes)
+[2013-3-27 15:37:40]  Checking for web/BigMap.png
+[2013-3-27 15:37:40]  Sending web/BigMap.png
+[2013-3-27 15:37:41]  Sent 100832 bytes.
+[2013-3-27 15:37:41]  Waiting for inbound request.
+[2013-3-27 15:37:44]  Received inbound request from 192.168.1.116
+GET /OliWeb.log HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Referer: http://192.168.1.124:8197/index.html
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:37:44]  (387 bytes)
+[2013-3-27 15:37:44]  Checking for web/OliWeb.log
+[2013-3-27 15:37:44]  Sending web/oops404.html
+[2013-3-27 15:37:44]  Sent 348 bytes.
+[2013-3-27 15:37:44]  Waiting for inbound request.
+[2013-3-27 15:37:48]  Received inbound request from 192.168.1.116
+GET /index.html HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Referer: http://192.168.1.124:8197/OliWeb.log
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:37:48]  (387 bytes)
+[2013-3-27 15:37:48]  Checking for web/index.html
+[2013-3-27 15:37:48]  Sending web/index.html
+[2013-3-27 15:37:48]  Sent 930 bytes.
+[2013-3-27 15:37:48]  Waiting for inbound request.
+[2013-3-27 15:37:48]  Received inbound request from 192.168.1.116
+GET /piLogo.png HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: */*
+Referer: http://192.168.1.124:8197/index.html
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:37:48]  (327 bytes)
+[2013-3-27 15:37:48]  Checking for web/piLogo.png
+[2013-3-27 15:37:48]  Sending web/piLogo.png
+[2013-3-27 15:37:48]  Sent 3277 bytes.
+[2013-3-27 15:37:48]  Waiting for inbound request.
+[2013-3-27 15:37:48]  Received inbound request from 192.168.1.116
+GET /BigMap.png HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: */*
+Referer: http://192.168.1.124:8197/index.html
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:37:48]  (327 bytes)
+[2013-3-27 15:37:48]  Checking for web/BigMap.png
+[2013-3-27 15:37:48]  Sending web/BigMap.png
+[2013-3-27 15:37:48]  Sent 100832 bytes.
+[2013-3-27 15:37:48]  Waiting for inbound request.
+[2013-3-27 15:37:54]  Received inbound request from 192.168.1.116
+GET /dir.txt HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Referer: http://192.168.1.124:8197/index.html
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:37:54]  (384 bytes)
+[2013-3-27 15:37:54]  Checking for web/dir.txt
+[2013-3-27 15:37:54]  Sending web/dir.txt
+[2013-3-27 15:37:54]  Sent 1083 bytes.
+[2013-3-27 15:37:54]  Waiting for inbound request.
+[2013-3-27 15:38:04]  Received inbound request from 192.168.1.116
+GET /OliWebConfig.xml HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Referer: http://192.168.1.124:8197/index.html
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:38:04]  (393 bytes)
+[2013-3-27 15:38:04]  Checking for web/OliWebConfig.xml
+[2013-3-27 15:38:04]  Sending web/oops404.html
+[2013-3-27 15:38:04]  Sent 348 bytes.
+[2013-3-27 15:38:04]  Waiting for inbound request.
+[2013-3-27 15:49:02]  Received inbound request from 192.168.1.116
+GET /index.html HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Cache-Control: max-age=0
+Referer: http://192.168.1.124:8197/OliWeb.log
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:49:02]  (413 bytes)
+[2013-3-27 15:49:02]  Checking for web/index.html
+[2013-3-27 15:49:02]  Sending web/index.html
+[2013-3-27 15:49:02]  Sent 961 bytes.
+[2013-3-27 15:49:02]  Waiting for inbound request.
+[2013-3-27 15:49:02]  Received inbound request from 192.168.1.116
+GET /piLogo.png HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: */*
+Referer: http://192.168.1.124:8197/index.html
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:49:02]  (327 bytes)
+[2013-3-27 15:49:02]  Checking for web/piLogo.png
+[2013-3-27 15:49:02]  Sending web/piLogo.png
+[2013-3-27 15:49:02]  Sent 3277 bytes.
+[2013-3-27 15:49:02]  Waiting for inbound request.
+[2013-3-27 15:49:02]  Received inbound request from 192.168.1.116
+GET /BigMap.png HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: */*
+Referer: http://192.168.1.124:8197/index.html
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:49:02]  (327 bytes)
+[2013-3-27 15:49:02]  Checking for web/BigMap.png
+[2013-3-27 15:49:02]  Sending web/BigMap.png
+[2013-3-27 15:49:03]  Sent 100832 bytes.
+[2013-3-27 15:49:03]  Waiting for inbound request.
+[2013-3-27 15:49:17]  Received inbound request from 192.168.1.116
+GET /www.raspberrypi.org HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Referer: http://192.168.1.124:8197/index.html
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:49:17]  (396 bytes)
+[2013-3-27 15:49:17]  Checking for web/www.raspberrypi.org
+[2013-3-27 15:49:17]  Sending web/oops404.html
+[2013-3-27 15:49:17]  Sent 348 bytes.
+[2013-3-27 15:49:17]  Waiting for inbound request.
+[2013-3-27 15:50:10]  Received inbound request from 192.168.1.116
+GET /www.raspberrypi.org HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:50:10]  (349 bytes)
+[2013-3-27 15:50:10]  Checking for web/www.raspberrypi.org
+[2013-3-27 15:50:10]  Sending web/oops404.html
+[2013-3-27 15:50:10]  Sent 348 bytes.
+[2013-3-27 15:50:10]  Waiting for inbound request.
+[2013-3-27 15:50:41]  Received inbound request from 192.168.1.116
+GET /index.html HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Cache-Control: max-age=0
+Referer: http://192.168.1.124:8197/OliWeb.log
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:50:41]  (413 bytes)
+[2013-3-27 15:50:41]  Checking for web/index.html
+[2013-3-27 15:50:41]  Sending web/index.html
+[2013-3-27 15:50:41]  Sent 968 bytes.
+[2013-3-27 15:50:41]  Waiting for inbound request.
+[2013-3-27 15:50:41]  Received inbound request from 192.168.1.116
+GET /piLogo.png HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: */*
+Cache-Control: max-age=0
+Referer: http://192.168.1.124:8197/index.html
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:50:41]  (353 bytes)
+[2013-3-27 15:50:41]  Checking for web/piLogo.png
+[2013-3-27 15:50:41]  Sending web/piLogo.png
+[2013-3-27 15:50:41]  Sent 3277 bytes.
+[2013-3-27 15:50:41]  Waiting for inbound request.
+[2013-3-27 15:50:41]  Received inbound request from 192.168.1.116
+GET /BigMap.png HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: */*
+Cache-Control: max-age=0
+Referer: http://192.168.1.124:8197/index.html
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:50:41]  (353 bytes)
+[2013-3-27 15:50:41]  Checking for web/BigMap.png
+[2013-3-27 15:50:41]  Sending web/BigMap.png
+[2013-3-27 15:50:41]  Sent 100832 bytes.
+[2013-3-27 15:50:41]  Waiting for inbound request.
+[2013-3-27 15:50:51]  Received inbound request from 192.168.1.116
+GET /OliWeb.log HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Referer: http://192.168.1.124:8197/index.html
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:50:51]  (387 bytes)
+[2013-3-27 15:50:52]  Checking for web/OliWeb.log
+[2013-3-27 15:50:52]  Sending web/oops404.html
+[2013-3-27 15:50:52]  Sent 348 bytes.
+[2013-3-27 15:50:52]  Waiting for inbound request.
+[2013-3-27 15:50:54]  Received inbound request from 192.168.1.116
+GET /index.html HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Referer: http://192.168.1.124:8197/OliWeb.log
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:50:54]  (387 bytes)
+[2013-3-27 15:50:54]  Checking for web/index.html
+[2013-3-27 15:50:54]  Sending web/index.html
+[2013-3-27 15:50:54]  Sent 968 bytes.
+[2013-3-27 15:50:54]  Waiting for inbound request.
+[2013-3-27 15:50:54]  Received inbound request from 192.168.1.116
+GET /piLogo.png HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: */*
+Referer: http://192.168.1.124:8197/index.html
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 15:50:54]  (327 bytes)
+[2013-3-27 15:50:54]  Checking for web/piLogo.png
+[2013-3-27 15:50:54]  Sending web/piLogo.png
+[2013-3-27 15:50:54]  Sent 3277 bytes.
+[2013-3-27 15:50:54]  Waiting for inbound request.
+[2013-3-27 15:50:54]  Received inbound request from 192.168.1.116
+GET /BigMap.png HTTP/1.1
+Host: 192.168.1.124:8197
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+Accept: */*
+Referer: http://192.168.1.124:8197/index.html
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+[2013-3-27 19:11:42]  ******************
+[2013-3-27 19:11:42]  ** OliWeb 1.0.0 **
+[2013-3-27 19:11:42]  ******************
+[2013-3-27 19:11:42]  Opening OliWebConfig.xml
+[2013-3-27 19:11:42]  Parsing XML (tinyxml2)
+[2013-3-27 19:11:42]  Errorcode = 0
+[2013-3-27 19:11:42]  Reading configuration parameters
+[2013-3-27 19:11:42]  PortNumber = 8197
+[2013-3-27 19:11:42]  RootFileDirectory = web
+[2013-3-27 19:11:42]  DefaultFileName = index.html
+[2013-3-27 19:11:42]  FileNotFoundPage = oops404.html
+[2013-3-27 19:11:42]  ScriptDirectory = bin
+[2013-3-27 19:11:42]  Opening port 8197
+[2013-3-27 19:11:42]  Listening on port 8197...
+[2013-3-27 19:11:42]  Waiting for inbound request.
+[2013-3-27 19:13:45]  Received inbound request from 192.168.1.1
+GET / HTTP/1.1
+Host: 68.104.234.48:8197
+Accept-Encoding: gzip, deflate
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us
+Connection: keep-alive
+Cache-Control: max-age=0
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 19:13:45]  (372 bytes)
+[2013-3-27 19:13:45]  Checking for web/index.html
+[2013-3-27 19:13:45]  Sending web/index.html
+[2013-3-27 19:13:45]  Sent 968 bytes.
+[2013-3-27 19:13:45]  Waiting for inbound request.
+[2013-3-27 19:13:45]  Received inbound request from 192.168.1.1
+GET /piLogo.png HTTP/1.1
+Host: 68.104.234.48:8197
+Referer: http://68.104.234.48:8197/
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en-us
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 19:13:45]  (333 bytes)
+[2013-3-27 19:13:45]  Checking for web/piLogo.png
+[2013-3-27 19:13:45]  Sending web/piLogo.png
+[2013-3-27 19:13:45]  Sent 3277 bytes.
+[2013-3-27 19:13:45]  Waiting for inbound request.
+[2013-3-27 19:13:45]  Received inbound request from 192.168.1.1
+GET /BigMap.png HTTP/1.1
+Host: 68.104.234.48:8197
+Referer: http://68.104.234.48:8197/
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en-us
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 19:13:45]  (333 bytes)
+[2013-3-27 19:13:45]  Checking for web/BigMap.png
+[2013-3-27 19:13:45]  Sending web/BigMap.png
+[2013-3-27 19:13:45]  Sent 100832 bytes.
+[2013-3-27 19:13:45]  Waiting for inbound request.
+[2013-3-27 19:14:03]  Received inbound request from 192.168.1.1
+GET /OliWeb.log HTTP/1.1
+Host: 68.104.234.48:8197
+Referer: http://68.104.234.48:8197/
+Accept-Encoding: gzip, deflate
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 19:14:03]  (393 bytes)
+[2013-3-27 19:14:03]  Checking for web/OliWeb.log
+[2013-3-27 19:14:03]  Sending web/oops404.html
+[2013-3-27 19:14:03]  Sent 348 bytes.
+[2013-3-27 19:14:03]  Waiting for inbound request.
+[2013-3-27 19:14:05]  Received inbound request from 192.168.1.1
+GET /index.html HTTP/1.1
+Host: 68.104.234.48:8197
+Referer: http://68.104.234.48:8197/OliWeb.log
+Accept-Encoding: gzip, deflate
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 19:14:05]  (403 bytes)
+[2013-3-27 19:14:05]  Checking for web/index.html
+[2013-3-27 19:14:05]  Sending web/index.html
+[2013-3-27 19:14:05]  Sent 968 bytes.
+[2013-3-27 19:14:05]  Waiting for inbound request.
+[2013-3-27 19:14:05]  Received inbound request from 192.168.1.1
+GET /piLogo.png HTTP/1.1
+Host: 68.104.234.48:8197
+Referer: http://68.104.234.48:8197/index.html
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en-us
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 19:14:05]  (343 bytes)
+[2013-3-27 19:14:05]  Checking for web/piLogo.png
+[2013-3-27 19:14:05]  Sending web/piLogo.png
+[2013-3-27 19:14:05]  Sent 3277 bytes.
+[2013-3-27 19:14:05]  Waiting for inbound request.
+[2013-3-27 19:14:05]  Received inbound request from 192.168.1.1
+GET /BigMap.png HTTP/1.1
+Host: 68.104.234.48:8197
+Referer: http://68.104.234.48:8197/index.html
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en-us
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 19:14:05]  (343 bytes)
+[2013-3-27 19:14:05]  Checking for web/BigMap.png
+[2013-3-27 19:14:05]  Sending web/BigMap.png
+[2013-3-27 19:14:05]  Sent 100832 bytes.
+[2013-3-27 19:14:05]  Waiting for inbound request.
+[2013-3-27 19:14:28]  Received inbound request from 192.168.1.1
+GET /apple-touch-icon-114x114-precomposed.png HTTP/1.1
+Host: 68.104.234.48:8197
+Connection: keep-alive
+Accept-Encoding: gzip, deflate
+User-Agent: MobileSafari/8536.25 CFNetwork/609.1.4 Darwin/13.0.0
+Accept-Language: en-us
+Accept: */*
+
+
+[2013-3-27 19:14:28]  (243 bytes)
+[2013-3-27 19:14:28]  Checking for web/apple-touch-icon-114x114-precomposed.png
+[2013-3-27 19:14:28]  Sending web/oops404.html
+[2013-3-27 19:14:28]  Sent 348 bytes.
+[2013-3-27 19:14:28]  Waiting for inbound request.
+[2013-3-27 19:14:28]  Received inbound request from 192.168.1.1
+GET /apple-touch-icon-114x114.png HTTP/1.1
+Host: 68.104.234.48:8197
+Connection: keep-alive
+Accept-Encoding: gzip, deflate
+User-Agent: MobileSafari/8536.25 CFNetwork/609.1.4 Darwin/13.0.0
+Accept-Language: en-us
+Accept: */*
+
+
+[2013-3-27 19:14:28]  (231 bytes)
+[2013-3-27 19:14:28]  Checking for web/apple-touch-icon-114x114.png
+[2013-3-27 19:14:28]  Sending web/oops404.html
+[2013-3-27 19:14:28]  Sent 348 bytes.
+[2013-3-27 19:14:28]  Waiting for inbound request.
+[2013-3-27 19:14:28]  Received inbound request from 192.168.1.1
+GET /apple-touch-icon-precomposed.png HTTP/1.1
+Host: 68.104.234.48:8197
+Connection: keep-alive
+Accept-Encoding: gzip, deflate
+User-Agent: MobileSafari/8536.25 CFNetwork/609.1.4 Darwin/13.0.0
+Accept-Language: en-us
+Accept: */*
+
+
+[2013-3-27 19:14:28]  (235 bytes)
+[2013-3-27 19:14:28]  Checking for web/apple-touch-icon-precomposed.png
+[2013-3-27 19:14:28]  Sending web/oops404.html
+[2013-3-27 19:14:28]  Sent 348 bytes.
+[2013-3-27 19:14:28]  Waiting for inbound request.
+[2013-3-27 19:14:28]  Received inbound request from 192.168.1.1
+GET /apple-touch-icon.png HTTP/1.1
+Host: 68.104.234.48:8197
+Connection: keep-alive
+Accept-Encoding: gzip, deflate
+User-Agent: MobileSafari/8536.25 CFNetwork/609.1.4 Darwin/13.0.0
+Accept-Language: en-us
+Accept: */*
+
+
+[2013-3-27 19:14:28]  (223 bytes)
+[2013-3-27 19:14:28]  Checking for web/apple-touch-icon.png
+[2013-3-27 19:14:28]  Sending web/oops404.html
+[2013-3-27 19:14:28]  Sent 348 bytes.
+[2013-3-27 19:14:28]  Waiting for inbound request.
+[2013-3-27 19:15:17]  Received inbound request from 192.168.1.1
+GET /index.html HTTP/1.1
+Host: 68.104.234.48:8197
+Connection: keep-alive
+Accept-Encoding: gzip, deflate
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+Accept-Language: en-us
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+
+
+[2013-3-27 19:15:17]  (356 bytes)
+[2013-3-27 19:15:17]  Checking for web/index.html
+[2013-3-27 19:15:17]  Sending web/index.html
+[2013-3-27 19:15:17]  Sent 968 bytes.
+[2013-3-27 19:15:17]  Waiting for inbound request.
+[2013-3-27 19:15:17]  Received inbound request from 192.168.1.1
+GET /piLogo.png HTTP/1.1
+Host: 68.104.234.48:8197
+Referer: http://68.104.234.48:8197/index.html
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en-us
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 19:15:17]  (343 bytes)
+[2013-3-27 19:15:17]  Checking for web/piLogo.png
+[2013-3-27 19:15:17]  Sending web/piLogo.png
+[2013-3-27 19:15:17]  Sent 3277 bytes.
+[2013-3-27 19:15:17]  Waiting for inbound request.
+[2013-3-27 19:15:17]  Received inbound request from 192.168.1.1
+GET /BigMap.png HTTP/1.1
+Host: 68.104.234.48:8197
+Referer: http://68.104.234.48:8197/index.html
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en-us
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 19:15:17]  (343 bytes)
+[2013-3-27 19:15:17]  Checking for web/BigMap.png
+[2013-3-27 19:15:17]  Sending web/BigMap.png
+[2013-3-27 19:15:17]  Sent 100832 bytes.
+[2013-3-27 19:15:17]  Waiting for inbound request.
+[2013-3-27 19:15:28]  Received inbound request from 192.168.1.1
+GET /ThisLinkDoesNot.Exist HTTP/1.1
+Host: 68.104.234.48:8197
+Referer: http://68.104.234.48:8197/index.html
+Accept-Encoding: gzip, deflate
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 19:15:28]  (414 bytes)
+[2013-3-27 19:15:28]  Checking for web/ThisLinkDoesNot.Exist
+[2013-3-27 19:15:28]  Sending web/oops404.html
+[2013-3-27 19:15:28]  Sent 348 bytes.
+[2013-3-27 19:15:28]  Waiting for inbound request.
+[2013-3-27 19:15:30]  Received inbound request from 192.168.1.1
+GET /index.html HTTP/1.1
+Host: 68.104.234.48:8197
+Referer: http://68.104.234.48:8197/ThisLinkDoesNot.Exist
+Accept-Encoding: gzip, deflate
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 19:15:30]  (414 bytes)
+[2013-3-27 19:15:30]  Checking for web/index.html
+[2013-3-27 19:15:30]  Sending web/index.html
+[2013-3-27 19:15:30]  Sent 968 bytes.
+[2013-3-27 19:15:30]  Waiting for inbound request.
+[2013-3-27 19:15:30]  Received inbound request from 192.168.1.1
+GET /piLogo.png HTTP/1.1
+Host: 68.104.234.48:8197
+Referer: http://68.104.234.48:8197/index.html
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en-us
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 19:15:30]  (343 bytes)
+[2013-3-27 19:15:30]  Checking for web/piLogo.png
+[2013-3-27 19:15:30]  Sending web/piLogo.png
+[2013-3-27 19:15:30]  Sent 3277 bytes.
+[2013-3-27 19:15:30]  Waiting for inbound request.
+[2013-3-27 19:15:30]  Received inbound request from 192.168.1.1
+GET /BigMap.png HTTP/1.1
+Host: 68.104.234.48:8197
+Referer: http://68.104.234.48:8197/index.html
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en-us
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 19:15:30]  (343 bytes)
+[2013-3-27 19:15:30]  Checking for web/BigMap.png
+[2013-3-27 19:15:30]  Sending web/BigMap.png
+[2013-3-27 19:15:30]  Sent 100832 bytes.
+[2013-3-27 19:15:30]  Waiting for inbound request.
+[2013-3-27 19:15:55]  Received inbound request from 192.168.1.1
+GET /abap.jpg HTTP/1.1
+Host: 68.104.234.48:8197
+Referer: http://68.104.234.48:8197/index.html
+Accept-Encoding: gzip, deflate
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 19:15:55]  (401 bytes)
+[2013-3-27 19:15:55]  Checking for web/abap.jpg
+[2013-3-27 19:15:55]  Sending web/abap.jpg
+[2013-3-27 19:15:57]  Sent 588571 bytes.
+[2013-3-27 19:15:57]  Waiting for inbound request.
+[2013-3-27 20:09:04]  Received inbound request from 192.168.1.1
+GET /index.html HTTP/1.1
+Host: 68.104.234.48:8197
+Referer: http://68.104.234.48:8197/ThisLinkDoesNot.Exist
+Accept-Encoding: gzip, deflate
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 21:03:42]  ******************
+[2013-3-27 21:03:42]  ** OliWeb 1.0.0 **
+[2013-3-27 21:03:42]  ******************
+[2013-3-27 21:03:42]  Opening OliWebConfig.xml
+[2013-3-27 21:03:42]  Parsing XML (tinyxml2)
+[2013-3-27 21:03:42]  Errorcode = 0
+[2013-3-27 21:03:42]  Reading configuration parameters
+[2013-3-27 21:03:42]  PortNumber = 8197
+[2013-3-27 21:03:42]  RootFileDirectory = web
+[2013-3-27 21:03:42]  DefaultFileName = index.html
+[2013-3-27 21:03:42]  FileNotFoundPage = oops404.html
+[2013-3-27 21:03:42]  ScriptDirectory = bin
+[2013-3-27 21:03:42]  Opening port 8197
+[2013-3-27 21:03:42]  Listening on port 8197...
+[2013-3-27 21:03:42]  Waiting for inbound request.
+[2013-3-27 21:03:52]  Received inbound request from 166.137.114.88
+GET /index.html HTTP/1.1
+Host: 68.104.234.48:8197
+Accept-Encoding: gzip, deflate
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us
+Connection: keep-alive
+Cache-Control: max-age=0
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 21:03:52]  (382 bytes)
+[2013-3-27 21:03:52]  Checking for web/index.html
+[2013-3-27 21:03:52]  Sending web/index.html
+[2013-3-27 21:03:52]  Sent 968 bytes.
+[2013-3-27 21:03:52]  Waiting for inbound request.
+[2013-3-27 21:03:52]  Received inbound request from 166.137.114.88
+GET /BigMap.png HTTP/1.1
+Host: 68.104.234.48:8197
+Referer: http://68.104.234.48:8197/index.html
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en-us
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 21:03:52]  (343 bytes)
+[2013-3-27 21:03:52]  Checking for web/BigMap.png
+[2013-3-27 21:03:52]  Sending web/BigMap.png
+[2013-3-27 21:03:53]  Sent 100832 bytes.
+[2013-3-27 21:03:53]  Waiting for inbound request.
+[2013-3-27 21:03:53]  Received inbound request from 166.137.114.88
+GET /piLogo.png HTTP/1.1
+Host: 68.104.234.48:8197
+Referer: http://68.104.234.48:8197/index.html
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en-us
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+
+[2013-3-27 21:03:53]  (343 bytes)
+[2013-3-27 21:03:53]  Checking for web/piLogo.png
+[2013-3-27 21:03:53]  Sending web/piLogo.png
+[2013-3-27 21:03:53]  Sent 3277 bytes.
+[2013-3-27 21:03:53]  Waiting for inbound request.
+[2013-3-27 21:06:08]  Received inbound request from 166.137.114.88
+GET /dir.txt HTTP/1.1
+Host: 68.104.234.48:8197
+Referer: http://68.104.234.48:8197/index.html
+Accept-Encoding: gzip, deflate
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_2 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B146 Safari/8536.25
+
+

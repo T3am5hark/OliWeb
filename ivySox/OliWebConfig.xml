@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<OliWebConfig>
+    <ConfigurationSettings>
+        <PortNumber value="8077"></PortNumber>
+        <RootFileDirectory value="web"></RootFileDirectory>
+        <DefaultFileName value="index.html"></DefaultFileName>
+        <FileNotFoundPage value="oops404.html"></FileNotFoundPage>
+        <ScriptDirectory value="cgi-bin"></ScriptDirectory>
+    </ConfigurationSettings>
+</OliWebConfig>

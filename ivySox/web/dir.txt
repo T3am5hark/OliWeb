@@ -1,0 +1,13 @@
+total 1024
+-rwxr-xr-x 1 pi pi      0 Mar 27 21:06 dir.txt
+-rwxr-xr-x 1 pi pi    968 Mar 27 15:50 index.html
+drwxr-xr-x 4 pi pi  16384 Mar 27 15:37 ..
+drwxr-xr-x 2 pi pi  16384 Mar 27 15:21 .
+-rwxr-xr-x 1 pi pi   3277 Mar 27 13:51 piLogo.png
+-rwxr-xr-x 1 pi pi    348 Mar 25 23:51 oops404.html
+-rwxr-xr-x 1 pi pi    323 Mar 25 01:08 my.html
+-rwxr-xr-x 1 pi pi 111575 Mar 25 00:56 Google.html
+-rwxr-xr-x 1 pi pi    137 Mar 25 00:29 somethingElse.html
+-rwxr-xr-x 1 pi pi 588571 Mar 24 16:26 abap.jpg
+-rwxr-xr-x 1 pi pi 100832 Mar 24 16:25 piSetup.jpg
+-rwxr-xr-x 1 pi pi 100832 Mar 23 15:26 BigMap.png
