@@ -1,2 +1,2 @@
 echo 'Starting motion.'
-sudo motion -c /etc/motion/motion.conf
+motion -c /web/motion/motion.conf &
