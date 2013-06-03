@@ -1,0 +1,25 @@
+MOD10=0
+MOD100=0
+for COUNTER in {1..256}
+do
+
+util/flip 17
+
+if [ $MOD10 -eq 4 ]
+then
+  util/flip 22
+  MOD10=0
+fi
+
+if [ $MOD100 -eq 16 ]
+then
+  util/flip 23
+  MOD100=0
+fi
+
+MOD10=$[MOD10+1]
+MOD100=$[MOD100+1]
+
+#sleep .01
+
+done

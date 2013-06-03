@@ -1,0 +1,13 @@
+
+STATE="$(gpio -g read $1)"
+
+#echo "State=$STATE"
+
+if [ $STATE -eq 1 ]
+then
+  gpio -g write $1 0
+else
+  gpio -g write $1 1
+fi
+
+
