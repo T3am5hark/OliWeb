@@ -31,6 +31,8 @@ int main (int argc, char *argv[])
     {
         if (searchString[i] == '?')
         {
+            str = "";
+            value = "";
             continue;
         }
         if (searchString[i] == '&')
@@ -58,7 +60,13 @@ int main (int argc, char *argv[])
 
         if (foundEquals) value += searchString[i]; else str += searchString[i];
     }
-    if (value.length() > 0) cout << value;
+
+    if (str.compare(targetParameter) == 0)
+    {
+         // Found parameter with no equals sign
+        if (value.length() == 0) cout << 1; else cout << value;
+        exit(0);
+    }
 
     // Did not find requested argument.
     exit(-1);
