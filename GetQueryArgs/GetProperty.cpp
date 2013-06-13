@@ -12,6 +12,7 @@ void showUsage()
 {
     cout << "CGI argument parser" << endl;
     cout << "Usage: " << endl;
+    cout << "GetProperty [Name] [URL]" << endl;
     exit(0);
 }
 
@@ -33,6 +34,8 @@ int main (int argc, char *argv[])
         {
             str = "";
             value = "";
+            foundTarget = 0;
+            foundEquals = 0;
             continue;
         }
         if (searchString[i] == '&')
@@ -55,6 +58,7 @@ int main (int argc, char *argv[])
         if (searchString[i] == '=')
         {
             foundEquals = 1;
+            value = "";
             continue;
         }
 

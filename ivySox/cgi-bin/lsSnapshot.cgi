@@ -14,4 +14,5 @@ echo '</br></br>'
 echo '<a href="snapshot.cgi">[Take Snapshot]</a>'	
 
 
-cgi-bin/htmlEnd.cgi
+#cgi-bin/htmlEnd.cgi
+echo '</html>'
