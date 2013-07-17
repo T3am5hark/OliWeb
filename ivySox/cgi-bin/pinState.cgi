@@ -1,5 +1,5 @@
 cgi-bin/htmlStart.cgi
-echo "<H2>"
+echo "<H3>"
 
 echo 'GPIO Pin States</br></br>'
 
@@ -15,6 +15,6 @@ do
   echo " <a href=\"flip.cgi?pin=$pin\">(FLIP)</a></br>"
 
 done
-echo "</H2>"
+echo "</H3>"
 
 cgi-bin/htmlEnd.cgi

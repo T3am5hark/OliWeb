@@ -1,1 +1,1 @@
-echo '</html>'
+cat htmlFooter.txt
