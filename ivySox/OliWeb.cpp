@@ -203,8 +203,9 @@ void OliWeb::invokeCgi(InboundRequest *request)
         setenv("CGI_BIN", scriptDirectory.c_str(),1);
         setenv("WEB_ROOT",rootFileDirectory.c_str(),1);
         // Redirect stdout to go where we want to pick it up.
+        mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
         int fileDescriptor = open(outputFilename.c_str(),
-                                  O_RDWR | O_CREAT );
+                                  O_RDWR | O_CREAT, mode );
         int savedStdOut = dup(STDOUT_FILENO);
         dup2( fileDescriptor, STDOUT_FILENO );
         close(fileDescriptor);
