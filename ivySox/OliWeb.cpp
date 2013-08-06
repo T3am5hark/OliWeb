@@ -1,7 +1,36 @@
+/*
+
+[OliWeb and IvySox are provided under the MIT software license]
+
+Copyright (C) 2013 Jeffrey Moore
+
+Permission is hereby granted, free of charge, to any person obtaining a copy 
+of this software and associated documentation files (the "Software"), to deal 
+in the Software without restriction, including without limitation the rights 
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+copies of the Software, and to permit persons to whom the Software is 
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in 
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+SOFTWARE.
+*/
+
+
 #include "OliWeb.h"
 #include <ctime>
 #include <sstream>
 #include <stdlib.h>
+#include <unistd.h>
+#include <wait.h>
+#include <fcntl.h>
 
 using namespace std;
 using namespace tinyxml2;
@@ -76,9 +105,11 @@ int OliWeb::fetchFile(InboundRequest *request)
     ifstream reqFileStream(requestedFile.c_str());
     if (reqFileStream.good())
     {
+        sendStatusOk(request);
         reqFileStream.close();
     } else {
         // Finally, drop a 404
+        sendStatusNotFound(request);
         requestedFile = rootFileDirectory + "/" + fileNotFoundPage;
     }
 
@@ -145,17 +176,61 @@ void OliWeb::invokeCgi(InboundRequest *request)
     // TODO: parse the arguments by splitting on ?, &
     getScriptFilename(request);
     getArgumentList(request);
-    string cmd = scriptDirectory + request->scriptFilename +
-                 request->scriptArguments + " >> " + outputFilename;
+    //string cmd = scriptDirectory + request->scriptFilename +
+    //             request->scriptArguments + " >> " + outputFilename;
+    string cmd = scriptDirectory + request->scriptFilename;
 
     writeLog("Invoking: '" + cmd + "'.");
-    int returnValue = system(cmd.c_str());
-    writeLog("Return value = " + toString(returnValue));
+    //int returnValue = system(cmd.c_str());
+    pid_t processId = fork();
+    int returnValue = 0;
+    if (processId < 0)
+    {
+        perror("Fork");
+        writeLog("Could not fork!!");
+        return;
+    } else if (processId > 0)
+    {
+        // Parent process - wait.
+        int waitStatus;
+        writeLog("Parent Waiting...");
+        waitpid(processId, &waitStatus, 0);
+        writeLog("Child process complete!!");
+    } else {
+        // Child process - set environment vars and exec command.
+        setenv("QUERY_STRING", request->requestedFile.c_str(), 1);
+        setenv("REQUEST_METHOD", "GET", 1);
+        setenv("CGI_BIN", scriptDirectory.c_str(),1);
+        setenv("WEB_ROOT",rootFileDirectory.c_str(),1);
+        // Redirect stdout to go where we want to pick it up.
+        int fileDescriptor = open(outputFilename.c_str(),
+                                  O_RDWR | O_CREAT );
+        int savedStdOut = dup(STDOUT_FILENO);
+        dup2( fileDescriptor, STDOUT_FILENO );
+        close(fileDescriptor);
+        //returnValue = execl(cmd.c_str(), cmd.c_str(), (char *) 0);
+        returnValue = execl("/bin/sh", "/bin/sh", "-c", cmd.c_str(), 
+                            (char *) 0);
+        if (returnValue) 
+        {
+            int err = errno;
+            writeLog("Errno = " + toString(err) );
+        }
+
+        dup2( savedStdOut, STDOUT_FILENO );
+        writeLog("CGI Execution Complete!!");
+        writeLog("CGI return value = " + toString(returnValue));
+        //close(fileDescriptor);
+        _exit(0);
+    }
+
+    // Parent process picks up here post execution of CGI.
+    // writeLog("CGI return value = " + toString(returnValue));
 
     if (returnValue != 0)
     {
-        //ivySox.sendMessage("Error invoking " + request->scriptFilename + ".");
-        //ivySox.closeInbound();
+        ivySox.sendMessage("Error invoking " + request->scriptFilename + ".");
+        ivySox.closeInbound();
         //ivySox.closeSocket(request->socketNumber);
     }
     else
@@ -182,6 +257,16 @@ bool OliWeb::isCgi(string str)
 
 }
 
+bool OliWeb::isHtml(string str)
+{
+    if (str.find(".html") != string::npos ||
+        str.find(".htm") != string::npos ||
+        str.find(".HTML") != string::npos ||
+        str.find(".HTM") != string::npos )
+        return true;
+    return false;
+}
+
 void OliWeb::handleInboundRequest()
 {
     // Accept inbound & Log request
@@ -203,9 +288,6 @@ void OliWeb::handleInboundRequest()
     int result = pthread_create( &aThread, &threadAttribute, threadEntryPoint, (void *) request);
     writeLog("Thread launch result = " + toString(result));
 
-    //threadRequestHandler(request);
-    //delete request;
-    //ivySox.closeInbound();
 }
 
 void *threadEntryPoint(void *requestVoid)
@@ -239,10 +321,48 @@ void OliWeb::threadRequestHandler(InboundRequest *request)
     {
         invokeCgi(request);
     } else {
+        //if (isHtml(request->requestedFile)) sendContentType(request, "text/html");
         request->requestedFile = rootFileDirectory + request->requestedFile;
         fetchFile(request);
     }
     //pthread_mutex_unlock(&ivySoxMutex);
+}
+
+int OliWeb::sendStatusOk(InboundRequest *request)
+{
+    int bytesSent = -1;
+    bytesSent = request->inbound.sendMessage("HTTP/1.1 200 OK\r\n");
+    //bytesSent += request->inbound.sendMessage("Content-Type: text/html; charset=UTF-8\r\n");
+    bytesSent += request->inbound.sendMessage("Connection: close\r\n");
+    bytesSent += request->inbound.sendMessage("\r\n");
+    return bytesSent;
+}
+
+int OliWeb::sendStatusNotFound(InboundRequest *request)
+{
+    int bytesSent = -1;
+    bytesSent = request->inbound.sendMessage("HTTP/1.1 404 Not Found\r\n");
+    bytesSent = request->inbound.sendMessage("Connection: close\r\n");
+    bytesSent += request->inbound.sendMessage("\r\n");
+    return bytesSent;
+}
+
+int OliWeb::sendContentType(InboundRequest *request, string contentType)
+{
+    int bytesSent = -1;
+    string contentTypeString = "Content-Type: ";
+    contentTypeString+=contentType + "\n\n";
+
+    pthread_mutex_lock(&ivySoxMutex);
+    //bytesSent = request->inbound.sendMessage("HTTP/1.x 200 OK\n");
+    bytesSent = request->inbound.sendMessage("HTTP/1.1 200 OK\r\n");
+    //bytesSent += request->inbound.sendMessage("Connection: close\r\n");
+    //bytesSent += request->inbound.sendMessage("Content-Type: text/html; charset=UTF-8\r\n");
+    //bytesSent += request->inbound.sendMessage("Content-Type: text/html; charset=UTF-8\n\n\n\n\n");
+    //bytesSent += request->inbound.sendMessage(contentTypeString);
+    bytesSent += request->inbound.sendMessage("\r\n");
+    pthread_mutex_unlock(&ivySoxMutex);
+    return(bytesSent);
 }
 
 // ToDo: Move this to request class
@@ -255,7 +375,7 @@ string OliWeb::parseRequest(string request)
     requestStream.getline(firstLine, 1024);
     string searchString = firstLine;
     istringstream searchStream(searchString);
-    string getRequest = "";
+    //string getRequest = "";
 
     // Pull first two tokens out of the first line
     string sub1, sub2;
@@ -270,8 +390,8 @@ string OliWeb::parseRequest(string request)
     if ( upperCase(sub1).compare("GET") == 0 && sub2.compare("/") != 0 )
     {
         //getRequest = rootFileDirectory + sub2;
-        getRequest = sub2;
-        return getRequest;
+        //getRequest = sub2;
+        return sub2;
     }
 
     // Otherwise we'll forward to the default (index.html)
