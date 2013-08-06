@@ -13,7 +13,7 @@ SOURCE	= 	IvySox.cpp OliWeb.cpp main.cpp ../tinyxml/tinyxml2.cpp
 OBJ 	=	$(SOURCE:.cpp=.o)
 LIBS	=	-lpthread
 
-all:		OliWeb
+all:		OliWeb install
 
 OliWeb:		$(OBJ)
 		@echo [Link]
@@ -26,3 +26,8 @@ OliWeb:		$(OBJ)
 clean:
 		@echo "[Clean]"
 		@rm -f $(OBJ) OliWeb
+
+install:
+		@echo "[Install]"
+		@chmod 775 cgi-bin/*.*
+		@chmod 775 util/*.*
