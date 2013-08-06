@@ -30,4 +30,5 @@ clean:
 install:
 		@echo "[Install]"
 		@cp GetProperty ../ivySox/util
+		@chmod 775 ../ivySox/util/GetProperty
 
