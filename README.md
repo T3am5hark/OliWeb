@@ -1,7 +1,11 @@
 OliWeb
 ======
 
-Bare-bones linux web server (built for Raspberry Pi project)
+Bare-bones linux web server (built for Raspberry Pi projects)
+
+Please see the Wiki at GitHub for installation and usage instructions:
+
+https://github.com/m2ware/OliWeb/wiki
 
 [OliWeb and IvySox are provided under the MIT software license]
 
