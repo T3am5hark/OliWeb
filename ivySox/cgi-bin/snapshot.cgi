@@ -1,7 +1,7 @@
 cgi-bin/htmlStart.cgi
 
 echo '<H2><font face="arial" color="C8A055">'
-echo 'Taking screenshot...</br>'
+echo 'Taking screenshot...<br>'
 
 fswebcam -r 640x472 -d /dev/video0 -v web/snapshot/snapshot.jpeg 
 #fswebcam -r 320x240 -d /dev/video1 -v web/snapshot/snapshot.jpeg
@@ -13,12 +13,12 @@ fswebcam -r 640x472 -d /dev/video0 -v web/snapshot/snapshot.jpeg
 DATESTAMP="$(date +%Y-%m-%d_%H_%M_%S)"
 cp web/snapshot/snapshot.jpeg "web/snapshot/$DATESTAMP.jpeg"
 
-#echo 'Done!</br>'
-echo '<img src="snapshot/snapshot.jpeg"/></br>'
-echo '<a href="lsSnapshot.cgi">show snapshot directory</a></br>'
-echo '<a href="snapshot.cgi">[re-take]</a></br>'
-echo '<a href="cgiScripts.html">scripts</a></br>'
-echo '<a href="index.html">back to main</a></br>'
+#echo 'Done!<br>'
+echo '<img src="snapshot/snapshot.jpeg"/><br>'
+echo '<a href="lsSnapshot.cgi">show snapshot directory</a><br>'
+echo '<a href="snapshot.cgi">[re-take]</a><br>'
+echo '<a href="cgiScripts.html">scripts</a><br>'
+echo '<a href="index.html">back to main</a><br>'
 
 echo '</font></H2>'
 cgi-bin/htmlEnd.cgi

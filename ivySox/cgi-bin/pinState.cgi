@@ -1,7 +1,7 @@
 cgi-bin/htmlStart.cgi
 echo "<H3>"
 
-echo 'GPIO Pin States</br></br>'
+echo 'GPIO Pin States<br><br>'
 
 #allPins=( 17 22 23 24 )
 #for pin in "${allPins[@]}"
@@ -12,7 +12,7 @@ do
 
   echo "Pin $pin: $PINSTATE"
   #echo $PINSTATE
-  echo " <a href=\"flip.cgi?pin=$pin\">(FLIP)</a></br>"
+  echo " <a href=\"flip.cgi?pin=$pin\">(FLIP)</a><br>"
 
 done
 echo "</H3>"
