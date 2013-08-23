@@ -74,7 +74,6 @@ void OliWeb::openLogFile()
     writeLog("******************");
     writeLog("** OliWeb 0.1.7 **");
     writeLog("******************");
-
 }
 
 bool OliWeb::logIsOpen()
@@ -184,13 +183,29 @@ void OliWeb::getArgumentList(InboundRequest *request)
 
 void OliWeb::invokeCgi(InboundRequest *request)
 {
-    string outputFilename = "scriptOutput." + toString(request->socketNumber);
-    // TODO: parse the arguments by splitting on ?, &
     getScriptFilename(request);
     getArgumentList(request);
     //string cmd = scriptDirectory + request->scriptFilename +
     //             request->scriptArguments + " >> " + outputFilename;
-    string cmd = scriptDirectory + request->scriptFilename;
+    string target = scriptDirectory + request->scriptFilename;
+    string cmd = "/bin/sh";
+    string flags = "-c";
+    invoke(request, cmd, flags, target);
+}
+
+void OliWeb::invokePhp(InboundRequest *request)
+{
+    getScriptFilename(request);
+    string target = rootFileDirectory + request->scriptFilename;
+    string flags = "-f";
+    string cmd = "/usr/bin/php";
+    invoke(request, cmd, flags, target);
+}
+
+void OliWeb::invoke(InboundRequest *request, string cmd,
+                    string flags, string target)
+{
+    string outputFilename = "scriptOutput." + toString(request->socketNumber);
 
     writeLog("Invoking: '" + cmd + "'.");
     //int returnValue = system(cmd.c_str());
@@ -222,9 +237,12 @@ void OliWeb::invokeCgi(InboundRequest *request)
         dup2( fileDescriptor, STDOUT_FILENO );
         close(fileDescriptor);
         //returnValue = execl(cmd.c_str(), cmd.c_str(), (char *) 0);
-        returnValue = execl("/bin/sh", "/bin/sh", "-c", cmd.c_str(), 
+        //returnValue = execl("/bin/sh", "/bin/sh", "-c", cmd.c_str(),
+        //                    (char *) 0);
+        returnValue = execl(cmd.c_str(), cmd.c_str(), flags.c_str(),
+                            target.c_str(),
                             (char *) 0);
-        if (returnValue) 
+        if (returnValue)
         {
             int err = errno;
             writeLog("Errno = " + toString(err) );
@@ -262,12 +280,18 @@ bool OliWeb::isCgi(string str)
     // Look for supported CGI script extensions
     // Consider adding an extensible list in XML...
     if (str.find(".CGI") != string::npos ||
-        str.find(".cgi") != string::npos ||
-        str.find(".py")  != string::npos ||
-        str.find(".PY")  != string::npos )
+        str.find(".cgi") != string::npos )
         return true;
     return false;
 
+}
+
+bool OliWeb::isPhp(string str)
+{
+    if (str.find(".PHP") != string::npos ||
+        str.find(".php") != string::npos)
+        return true;
+    return false;
 }
 
 bool OliWeb::isHtml(string str)
@@ -332,8 +356,15 @@ void OliWeb::threadRequestHandler(InboundRequest *request)
 
     if (isCgi(request->requestedFile))
     {
+        writeLog("Request type = CGI script");
         invokeCgi(request);
-    } else {
+    }
+    else if (isPhp(request->requestedFile))
+    {
+        writeLog("Request type = PHP script");
+        invokePhp(request);
+    }
+    else {
         //if (isHtml(request->requestedFile)) sendContentType(request, "text/html");
         request->requestedFile = rootFileDirectory + request->requestedFile;
         fetchFile(request);

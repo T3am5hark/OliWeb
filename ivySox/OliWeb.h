@@ -84,9 +84,12 @@ class OliWeb
     void writeLog(string logMessage, bool timestamp = true);
     void handleInboundRequest();
     string parseRequest(string request);
-    bool isCgi(string str);
-    bool isHtml(string str);
+    static bool isCgi(string str);
+    static bool isPhp(string str);
+    static bool isHtml(string str);
     void invokeCgi(InboundRequest *request);
+    void invokePhp(InboundRequest *request);
+    void invoke(InboundRequest *request, string cmd, string flags, string target);
     int fetchFile(InboundRequest *request);
     int sendContentType(InboundRequest *request, string contentType);
     int sendStatusOk(InboundRequest *request);
