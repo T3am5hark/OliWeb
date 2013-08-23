@@ -7,8 +7,10 @@
 </head>
 
 <p>
-<h1>
-<?php echo "Here is some PHP!\n" ?>
-</h1>
+<h2>
+<img src="rhino32.png" />
+<?php echo "Here's some PHP!\n" ?>
+<img src="rhino32.png" />
+</h2>
 </p>
 </HTML>

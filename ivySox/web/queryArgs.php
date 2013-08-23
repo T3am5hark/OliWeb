@@ -7,11 +7,16 @@
 </head>
 
 <p>
-<h1>
-<?php echo "Here is some PHP!<br><hr>\n" ?>
+<h2>
+<img src="rhino32.png" />
+<?php echo "Here's some PHP!\n" ?>
+<img src="rhino32.png" />
+<br><hr>
+</h2>
+
 <h3>
 <?php
-echo "Parsing URL QUERY_STRING arguments: <br><br>\n";
+echo "Parsing QUERY_STRING: <br><br>\n";
 parse_str($_SERVER['QUERY_STRING']);
 //echo "Query String =";
 //echo $_SERVER['QUERY_STRING'];
@@ -28,6 +33,5 @@ echo "<br><hr>\n";
 
 ?>
 </h3>
-</h1>
 </p>
 </HTML>

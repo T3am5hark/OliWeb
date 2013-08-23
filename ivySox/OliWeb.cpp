@@ -163,9 +163,9 @@ string OliWeb::extractQueryArgs(string url)
     }
 
     // DEBUG!!
-    std::cout << "a = " << toString(a) << std::endl;
-    std::cout << "url  = '" << url << "'" << std::endl;
-    std::cout << "args = '" << args << "'" << std::endl; 
+    //std::cout << "a = " << toString(a) << std::endl;
+    //std::cout << "url  = '" << url << "'" << std::endl;
+    //std::cout << "args = '" << args << "'" << std::endl; 
 
     return args;
 }

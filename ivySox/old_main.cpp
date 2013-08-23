@@ -77,14 +77,13 @@ int main( int argc, char *argv[])
             cout << "Waiting for inbound request..." << endl;
             //cout << "Woke up!" << endl;
             int inboundSocketNumber = ivySox.acceptInbound();
-            cout << "Received inbound request from " 
-                 << ivySox.getInboundIpAddress() 
+            cout << "Received inbound request from "
+                 << ivySox.getInboundIpAddress()
                  << endl;
 
             cout << "Inbound port = " << ivySox.getInboundPortNumber() << endl;
             cout << "Socket = " << inboundSocketNumber << endl;
-            
-            
+
             int receivedBytes = ivySox.receiveInbound(inboundBuffer, BUFFERSIZE);
             ostringstream response("");
             //response.clear();
@@ -93,17 +92,17 @@ int main( int argc, char *argv[])
             response << "My IP Address is: " << ivySox.getIpAddress() << endl;
             response << "IvySox inbound request:" << endl;
             response << "(" << receivedBytes << " bytes)" << endl;
-            if (receivedBytes >= 0) 
+            if (receivedBytes >= 0)
             {
                 rxMessage = ivySox.messageToString(inboundBuffer, receivedBytes);
-                response << "[BEGIN TRANSMISSION]" 
+                response << "[BEGIN TRANSMISSION]"
                          << rxMessage
                          << "[END TRANSMISSION]" << endl;
                 istringstream stream(rxMessage);
                 stream.getline(request, 512);
                 cout << "Request = [" << request << "]" << endl;
-                
-            } else  
+
+            } else
             {
                 cout << "errno = " << errno << endl;
                 perror("Something is wrong...");
