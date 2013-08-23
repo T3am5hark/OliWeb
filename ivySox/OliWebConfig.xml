@@ -6,5 +6,6 @@
         <DefaultFileName value="index.html"></DefaultFileName>
         <FileNotFoundPage value="oops404.html"></FileNotFoundPage>
         <ScriptDirectory value="cgi-bin"></ScriptDirectory>
-    </ConfigurationSettings>
+        <LogFile value="OliWeb.log"></LogFile>
+</ConfigurationSettings>
 </OliWebConfig>

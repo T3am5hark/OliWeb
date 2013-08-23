@@ -54,20 +54,32 @@ OliWeb::OliWeb()
     defaultFileName = "index.html";
     fileNotFoundPage = "oops404.html";
     scriptDirectory = "cgi-bin";
-    threadIndex = 0;
+    logFileName = "OliWeb.log";
 
-    // Open Log File
-    string logFileName = "OliWeb.log";
-    log.open(logFileName.c_str(), ios::app );
-    writeLog("******************");
-    writeLog("** OliWeb 0.1.7 **");
-    writeLog("******************");
+    threadIndex = 0;
     configXml();
+
+    openLogFile();
 }
 
 OliWeb::~OliWeb()
 {
     log.close();
+}
+
+void OliWeb::openLogFile()
+{
+    // Open Log File
+    log.open(logFileName.c_str(), ios::app );
+    writeLog("******************");
+    writeLog("** OliWeb 0.1.7 **");
+    writeLog("******************");
+
+}
+
+bool OliWeb::logIsOpen()
+{
+    return log.is_open();
 }
 
 int OliWeb::run()
@@ -432,20 +444,23 @@ void OliWeb::writeLog(string logMessage, bool timestamp)
         time_t currentTime = time(0);
         struct tm *timeStruct = localtime(&currentTime);
 
-        message << "[" << (timeStruct->tm_year + 1900) << '-' 
+        message << "[" << (timeStruct->tm_year + 1900) << '-'
                        << (timeStruct->tm_mon + 1) << '-'
-                       << (timeStruct->tm_mday) << " " 
+                       << (timeStruct->tm_mday) << " "
                        << (timeStruct->tm_hour) << ":";
-        if (timeStruct->tm_min < 10) message << "0"; 
+        if (timeStruct->tm_min < 10) message << "0";
         message        << (timeStruct->tm_min) << ":";
         if (timeStruct->tm_sec < 10) message << "0";
         message        << (timeStruct->tm_sec) << "]  ";
     }
     message        << logMessage << endl;
 
-    log << message.str();
+    if (logIsOpen())
+    {
+        log << message.str();
+        log.flush();
+    }
     cout << message.str();
-    log.flush();
     //pthread_mutex_unlock(&logMutex);
 }
 
@@ -492,6 +507,8 @@ int OliWeb::configXml()
                     defaultFileName = value;
             else if ( settingName == "FileNotFoundPage")
                     fileNotFoundPage = value;
+            else if ( settingName == "LogFile")
+                    logFileName = value;
             else    writeLog("Setting not recognized!!");
 
             configElement = configElement->NextSiblingElement();

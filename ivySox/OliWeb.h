@@ -58,14 +58,14 @@ class InboundRequest
     string requestedFile;
     string scriptFilename;
     string scriptArguments;
-    int bytesSent;
-    int receivedBytes;
-    //IvySox ivySox;
-    InboundConnection inbound;
 
     void *oliWebPtr;
+    int bytesSent;
+    int receivedBytes;
+    InboundConnection inbound;
 
     private:
+
 
 };
 
@@ -93,12 +93,16 @@ class OliWeb
     int sendStatusNotFound(InboundRequest *request);
     void getScriptFilename(InboundRequest *request);
     void getArgumentList(InboundRequest *request);
+    void openLogFile();
+    bool logIsOpen();
 
     int portNumber;
     string rootFileDirectory;
     string defaultFileName;
     string fileNotFoundPage;
     string scriptDirectory;
+    string logFileName;
+
     IvySox ivySox;
     XMLDocument config;
     ofstream log;
