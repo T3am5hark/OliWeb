@@ -56,6 +56,7 @@ class InboundRequest
     string requestString;
     char inboundBuffer[INBOUND_BUFFER_SIZE];
     string requestedFile;
+    string queryString;
     string scriptFilename;
     string scriptArguments;
 
@@ -84,6 +85,7 @@ class OliWeb
     void writeLog(string logMessage, bool timestamp = true);
     void handleInboundRequest();
     string parseRequest(string request);
+    static string extractQueryArgs(string url);
     static bool isCgi(string str);
     static bool isPhp(string str);
     static bool isHtml(string str);

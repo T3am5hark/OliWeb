@@ -153,6 +153,23 @@ void OliWeb::getScriptFilename(InboundRequest *request)
     }
 }
 
+string OliWeb::extractQueryArgs(string url)
+{
+    string args = "";
+    size_t a = url.find("?");
+    if ( a != string::npos && a < url.length() )
+    {
+        args = url.substr(a+1, string::npos);
+    }
+
+    // DEBUG!!
+    std::cout << "a = " << toString(a) << std::endl;
+    std::cout << "url  = '" << url << "'" << std::endl;
+    std::cout << "args = '" << args << "'" << std::endl; 
+
+    return args;
+}
+
 // ToDo: move this to the InboundRequest class
 void OliWeb::getArgumentList(InboundRequest *request)
 {
@@ -225,7 +242,8 @@ void OliWeb::invoke(InboundRequest *request, string cmd,
         writeLog("Child process complete!!");
     } else {
         // Child process - set environment vars and exec command.
-        setenv("QUERY_STRING", request->requestedFile.c_str(), 1);
+        //setenv("QUERY_STRING", request->requestedFile.c_str(), 1);
+        setenv("QUERY_STRING", request->queryString.c_str(), 1);
         setenv("REQUEST_METHOD", "GET", 1);
         setenv("CGI_BIN", scriptDirectory.c_str(),1);
         setenv("WEB_ROOT",rootFileDirectory.c_str(),1);
@@ -353,6 +371,7 @@ void OliWeb::threadRequestHandler(InboundRequest *request)
     writeLog("(" + toString(request->receivedBytes) + " bytes)");
     // Parse the request string to get the file or script being requested
     request->requestedFile = parseRequest(request->requestString);
+    request->queryString = extractQueryArgs(request->requestedFile);
 
     if (isCgi(request->requestedFile))
     {
