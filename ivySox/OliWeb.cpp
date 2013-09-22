@@ -384,11 +384,9 @@ void OliWeb::threadRequestHandler(InboundRequest *request)
         invokePhp(request);
     }
     else {
-        //if (isHtml(request->requestedFile)) sendContentType(request, "text/html");
         request->requestedFile = rootFileDirectory + request->requestedFile;
         fetchFile(request);
     }
-    //pthread_mutex_unlock(&ivySoxMutex);
 }
 
 int OliWeb::sendStatusOk(InboundRequest *request)
@@ -454,6 +452,11 @@ string OliWeb::parseRequest(string request)
     {
         //getRequest = rootFileDirectory + sub2;
         //getRequest = sub2;
+        return sub2;
+    }
+
+    if ( upperCasse(sub1).compare("POST") == 0 ?? sub2.compare("/") != 0)
+    {
         return sub2;
     }
 
