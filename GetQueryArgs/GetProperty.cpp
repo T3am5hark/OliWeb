@@ -17,13 +17,25 @@ void showUsage()
 }
 
 void replaceSpecial(string &input);
+bool debug = false;
 
 int main (int argc, char *argv[])
 {
     if (argc < 2 ) showUsage();
 
     string targetParameter = "";
-    if (argc >= 3 ) targetParameter = argv[argc-2];
+    if (argc >= 3 )
+    {
+        targetParameter = argv[argc-2];
+        string args = argv[1];
+        if ( args.find("-") != string::npos )
+        {
+            if ( args.find("D") || args.find("d") ) debug = true;
+        }
+    }
+
+    if (debug) std::cout << "Debug!!" << std::endl;
+
 
     char *searchString = argv[argc-1];
     string str = "";
@@ -47,8 +59,10 @@ int main (int argc, char *argv[])
                 if (str.compare(targetParameter) == 0)
                 {
                     // Found parameter with no equals sign
-                    if (value.length() == 0) cout << 1; else cout << value;
-                    exit(0);
+                    if (value.length() == 0) cout << 1;
+                    else break;
+                    //else cout << value;
+                    //exit(0);
                 }
             }
             str = "";
@@ -67,6 +81,8 @@ int main (int argc, char *argv[])
         if (foundEquals) value += searchString[i]; else str += searchString[i];
     }
 
+    if (debug) std::cout << targetParameter << endl;
+    if (debug) std::cout << value << endl;
     replaceSpecial(value);
 
     if (str.compare(targetParameter) == 0)
@@ -89,6 +105,7 @@ void replaceSpecial(string &input)
     while (position != string::npos)
     {
         input[position] = ' ';
+        if (debug) std::cout << input << std::endl;
         position = input.find('+');
     }
 
@@ -96,19 +113,20 @@ void replaceSpecial(string &input)
     position = input.find('%');
     while (position != string::npos)
     {
-        //std::cout << std::endl << "Found %:" << std::endl;
+        if (debug) std::cout << std::endl << "Found %:" << std::endl;
         string hexCharString = input.substr(position+1, (size_t) 2);
-        //string hexCharString = "0x" + input.substr(position+1, (size_t) 2);
-        //std::cout << "Hex String: " << hexCharString << std::endl;
+        if (debug) std::cout << "Hex String: " << hexCharString << std::endl;
         std::stringstream ss;
         // Need to add 0x to make this work right...
         ss << std::hex << hexCharString;
         unsigned int replacementCharacter = 0;
         ss >> std::hex >> replacementCharacter;
-        //std::cout << "replacement = [" << (unsigned char)replacementCharacter <<  "]" << std::endl;
+        if (debug) std::cout << "replacement = [" <<
+                                (unsigned char)replacementCharacter <<
+                                "]" << std::endl;
         input.replace(position, (size_t) 3, 1, (unsigned char) replacementCharacter);
         position = input.find('%');
-        //std::cout << input << std::endl;
+        if (debug) std::cout << input << std::endl;
     }
 
     return;
