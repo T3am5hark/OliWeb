@@ -16,11 +16,12 @@
 
 <h3>
 <?php
-echo "Parsing QUERY_STRING: <br><br>\n";
-parse_str($_SERVER['QUERY_STRING']);
-//echo "Query String =";
-//echo $_SERVER['QUERY_STRING'];
-//echo "<br><br>\n";
+echo "Parsing request BODY: <br><br>\n";
+echo "BODY=<br>";
+echo "[";
+echo $_SERVER['BODY'];
+echo "]<br>";
+parse_str($_SERVER['BODY']);
 echo "parameter1=";
 echo $parameter1;
 echo "<br>\n";
@@ -29,19 +30,20 @@ echo $parameter2;
 echo "<br>\n";
 echo "parameter3=";
 echo $parameter3;
-echo "<br><hr>\n";
+echo "<br>\n";
+echo "TextBox contents: <br>\n";
+echo "{<br>\n";
+echo $TextBox;
+echo "\n<br>}";
+echo "<hr>\n";
 
-//echo "<br>parameter1 (php GET)=";
-//echo $_GET["parameter1"];
-//echo "<br>parameter2 (php GET)=";
-//echo $_GET["parameter2"];
-//echo "<br>parameter3 (php GET)=";
-//echo $_GET["parameter3"];
-//echo "<br>";
-
+//echo "TextBox via PHP post: <br>\n";
+//echo "{<br>\n";
+//echo $_POST["TextBox"];
+//echo "\n<br>}";
+//echo "<hr>\n";
 
 ?>
 </h3>
-
 </p>
 </HTML>

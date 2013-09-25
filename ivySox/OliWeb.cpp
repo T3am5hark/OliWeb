@@ -185,7 +185,7 @@ void OliWeb::getArgumentList(InboundRequest *request)
 void OliWeb::invokeCgi(InboundRequest *request)
 {
     getScriptFilename(request);
-    getArgumentList(request);
+    //getArgumentList(request);
     //string cmd = scriptDirectory + request->scriptFilename +
     //             request->scriptArguments + " >> " + outputFilename;
     string target = scriptDirectory + request->scriptFilename;
