@@ -153,22 +153,6 @@ void OliWeb::getScriptFilename(InboundRequest *request)
     }
 }
 
-string OliWeb::extractQueryArgs(string url)
-{
-    string args = "";
-    size_t a = url.find("?");
-    if ( a != string::npos && a < url.length() )
-    {
-        args = url.substr(a+1, string::npos);
-    }
-
-    // DEBUG!!
-    //std::cout << "a = " << toString(a) << std::endl;
-    //std::cout << "url  = '" << url << "'" << std::endl;
-    //std::cout << "args = '" << args << "'" << std::endl; 
-
-    return args;
-}
 
 // ToDo: move this to the InboundRequest class
 void OliWeb::getArgumentList(InboundRequest *request)
@@ -244,9 +228,10 @@ void OliWeb::invoke(InboundRequest *request, string cmd,
         // Child process - set environment vars and exec command.
         //setenv("QUERY_STRING", request->requestedFile.c_str(), 1);
         setenv("QUERY_STRING", request->queryString.c_str(), 1);
-        setenv("REQUEST_METHOD", "GET", 1);
+        setenv("REQUEST_METHOD", request->method.c_str(), 1);
         setenv("CGI_BIN", scriptDirectory.c_str(),1);
         setenv("WEB_ROOT",rootFileDirectory.c_str(),1);
+        setenv("BODY", request->body.c_str(),1);
         // Redirect stdout to go where we want to pick it up.
         mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
         int fileDescriptor = open(outputFilename.c_str(),
@@ -365,14 +350,14 @@ void OliWeb::threadRequestHandler(InboundRequest *request)
     writeLog("Socket numbr = " + toString(request->socketNumber));
     request->receivedBytes = request->inbound.receive(request->inboundBuffer, INBOUND_BUFFER_SIZE);
     request->requestString = ivySox.messageToString(request->inboundBuffer, request->receivedBytes);
-    //request->receivedBytes = ivy->receiveInbound(request->inboundBuffer, INBOUND_BUFFER_SIZE);
-    //request->requestString = ivy->messageToString(request->inboundBuffer, request->receivedBytes);
     writeLog(request->requestString, false);
     writeLog("(" + toString(request->receivedBytes) + " bytes)");
     // Parse the request string to get the file or script being requested
-    request->requestedFile = parseRequest(request->requestString);
-    request->queryString = extractQueryArgs(request->requestedFile);
+    // request->requestedFile = parseRequest(request->requestString);
+    // request->queryString = extractQueryArgs(request->requestedFile);
+    request->parse(defaultFileName);
 
+    writeLog("Requested File = [" + request->requestedFile + "]");
     if (isCgi(request->requestedFile))
     {
         writeLog("Request type = CGI script");
@@ -426,12 +411,32 @@ int OliWeb::sendContentType(InboundRequest *request, string contentType)
     return(bytesSent);
 }
 
+/*
+string OliWeb::extractQueryArgs(string url)
+{
+    string args = "";
+    size_t a = url.find("?");
+    if ( a != string::npos && a < url.length() )
+    {
+        args = url.substr(a+1, string::npos);
+    }
+
+    // DEBUG!!
+    //std::cout << "a = " << toString(a) << std::endl;
+    //std::cout << "url  = '" << url << "'" << std::endl;
+    //std::cout << "args = '" << args << "'" << std::endl; 
+
+    return args;
+}
+*/
+
 // ToDo: Move this to request class
-string OliWeb::parseRequest(string request)
+// string OliWeb::parseRequest(string request)
+void InboundRequest::parse(string defaultFilename)
 {
     // Do some string manipulation to identify the GET request
     // Look at the first line
-    istringstream requestStream(request);
+    istringstream requestStream(requestString);
     char firstLine[1024];
     requestStream.getline(firstLine, 1024);
     string searchString = firstLine;
@@ -439,8 +444,8 @@ string OliWeb::parseRequest(string request)
     //string getRequest = "";
 
     // Pull first two tokens out of the first line
-    string sub1, sub2;
-    searchStream >> sub1 >> sub2;
+    string sub1, sub2, sub3;
+    searchStream >> sub1 >> sub2 >> sub3;
 
     // DEBUG!!
     //writeLog(searchString);
@@ -452,16 +457,34 @@ string OliWeb::parseRequest(string request)
     {
         //getRequest = rootFileDirectory + sub2;
         //getRequest = sub2;
-        return sub2;
+        //return sub2;
+        method = "GET";
+        requestedFile = sub2;
+        protocol = sub3;
     }
 
-    if ( upperCasse(sub1).compare("POST") == 0 ?? sub2.compare("/") != 0)
+    if ( upperCase(sub1).compare("POST") == 0 && sub2.compare("/") != 0)
     {
-        return sub2;
+        //return sub2;
+        method = "POST";
+        requestedFile = sub2;
+        protocol = sub3;
     }
 
+    size_t a = requestedFile.find("?");
+    if ( a != string::npos && a < requestedFile.length() )
+    {
+        queryString = requestedFile.substr(a+1, string::npos);
+    }
+
+    // Find a blank line...
+    size_t emptyLinePos = requestString.find("\r\n\r\n");
+    if ( emptyLinePos != string::npos )
+    {
+        body = requestString.substr(emptyLinePos+4, string::npos);
+    }
     // Otherwise we'll forward to the default (index.html)
-    return ("/"+defaultFileName);
+    if (requestedFile.length() == 0) requestedFile = "/"+defaultFilename;
 }
 
 template <class myType> string toString(myType item)

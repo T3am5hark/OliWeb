@@ -51,14 +51,18 @@ class InboundRequest
 
     InboundRequest(int socketNumber);
     InboundRequest();
+    void parse(string defaultFilename = "/index.html");
 
     int socketNumber;
     string requestString;
     char inboundBuffer[INBOUND_BUFFER_SIZE];
     string requestedFile;
     string queryString;
+    string method;
     string scriptFilename;
     string scriptArguments;
+    string protocol;
+    string body;
 
     void *oliWebPtr;
     int bytesSent;
@@ -84,8 +88,8 @@ class OliWeb
     int configXml();
     void writeLog(string logMessage, bool timestamp = true);
     void handleInboundRequest();
-    string parseRequest(string request);
-    static string extractQueryArgs(string url);
+    //string parseRequest(string request);
+    //static string extractQueryArgs(string url);
     static bool isCgi(string str);
     static bool isPhp(string str);
     static bool isHtml(string str);
