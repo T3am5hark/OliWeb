@@ -2,7 +2,7 @@
 NLINES="$(util/GetProperty N $QUERY_STRING)"
 
 if [ "$NLINES" = "" ]; then
-  NLINES=250
+  NLINES=150
 fi
 
 
