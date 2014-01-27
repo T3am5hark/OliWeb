@@ -1,65 +1,94 @@
+<!DOCTYPE html>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" >
+<html lang="en">
+
 <head>
-    <title>Raspberry Pi!!!</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- No zoom 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  -->
+
+  <!-- With zoom -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0>
+
+  <title>Raspberry Pi!!!</title>
+
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+
 </head>
 <body>
-
+  <p>
 <p>
-<font face="arial">
-<h3>
-<a href="http://www.raspberrypi.org">
-<img src="piLogo.png" height="24" width="24"/></a>
-Hello, this is Raspberry Pi!
-<a href="http://www.raspberrypi.org">
-<img src="piLogo.png" height="24" width="24"/></a>
-<br>
-</h3>
-<h4>
-Raspberry Pi hosting OliWeb 0.0.1<br>
-[Powered by IvySox 0.0.1]
-<br>
-Recent webcam image: <br>
-<img src="snapshot/snapshot.jpeg" width=305 />
-<br>
-Multi-frame composite:<br>
-<img src="snapshot/snapshotx3.jpeg" width=305 />
-<br>
+  <h4>
+    <a href="http://www.raspberrypi.org">
+    <img src="piLogo.png" height="24" width="24"/></a>
+    Hello, this is Raspberry Pi!
+    <a href="http://www.raspberrypi.org">
+    <img src="piLogo.png" height="24" width="24"/></a>
+    <br> 
+    Raspberry Pi hosting OliWeb 1.0.0 <br>
+    [Powered by IvySox 1.0.0]
+    <br>
+  </h4>
+  <h4>
+
+    Recent webcam image: <br>
+    <!-- <img src="snapshot/snapshot.jpeg" width=305 /> -->
+    <img src="snapshot/snapshot.jpeg" class="img-responsive" alt="Responsive image" />
+    <br>
+    Multi-frame composite:<br>
+    <!-- <img src="snapshot/snapshotx3.jpeg" width=305 /> -->
+    <img src="snapshot/snapshotx3.jpeg" class="img-responsive" alt="Responsive image" />
+    <br>
 <!-- <a href="startMotion.cgi">Start Motion!</a><br>
      <a href="stopMotion.cgi">Stop Motion</a><br>
 -->
-<br>
-</h4>
-<h3>
-<a href="snapshot.cgi">Take snapshot!</a><br>
-<a href="snapshotMulti.cgi">MultiSnapshot!</a><br>
-<a href="lsSnapshot.cgi">Show Snapshot Directory</a><br>
-<br>
+    <br>
+  </h4>
+  <h3>
+    <a href="snapshot.cgi">Take snapshot!</a><br>
+    <a href="snapshotMulti.cgi">MultiSnapshot!</a><br>
+    <a href="lsSnapshot.cgi">Show Snapshot Directory</a><br>
+    <br>
 
-<a href="test.cgi?parameter1=true&parameter2=12345&parameter3">Test CGI</a><br>
-<a href="lsMotion.cgi">Show motion directory</a><br>
-<a href="lsCurrent.cgi">Show current directory</a><br>
-<a href="lsWeb.cgi">Show web root directory</a><br>
-<a href="lsBin.cgi">Show bin directory</a><br>
-<a href="ShowWebLog.cgi">Show web log</a><br>
-<a href="psAll.cgi">Show all running processes</a><br>
-<a href="who.cgi">Show all system users</a><br>
-<a href="top.cgi">Top!</a><br>
-<a href="lsVideo.cgi">Show capture directory</a><br>
-<a href="ifConfig.cgi">ifConfig</a><br>
-<br>
+    <a href="test.cgi?parameter1=true&parameter2=12345&parameter3">Test CGI</a><br>
+    <a href="lsMotion.cgi">Show motion directory</a><br>
+    <a href="lsCurrent.cgi">Show current directory</a><br>
+    <a href="lsWeb.cgi">Show web root directory</a><br>
+    <a href="lsBin.cgi">Show bin directory</a><br>
+    <a href="ShowWebLog.cgi">Show web log</a><br>
+    <a href="ShowConfigXML.cgi">Show OliWeb config</a><br>
+    <a href="psAll.cgi">Show all running processes</a><br>
+    <a href="who.cgi">Show all system users</a><br>
+    <a href="lsVideo.cgi">Show capture directory</a><br>
+    <a href="ifConfig.cgi">ifConfig</a><br>
+    <br>
 
-<a href="index.html">Back to main</a>
+    <a href="index.html">Back to main</a>
 
-
-</h3>
+  </h3>
 </font>
 </p>
 
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script scr="https://code.jquery.com/jquery.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script scr="js/bootstrap.min.js"></script>
+
 </body>
+
 </html>
+
+
 
 
 

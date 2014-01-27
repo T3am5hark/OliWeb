@@ -23,7 +23,9 @@ done
 #done
 
 echo '<br><br>'
-echo '<a href="snapshot.cgi">[Take Snapshot]</a>'	
+echo '<a href="snapshot.cgi">[Take Snapshot]</a><br>'	
+echo '<a href="cgiScripts.html">[Scripts]</a><br>'
+echo '<a href="index.html">[Main]</a><br>'
 
 echo '</H3>'
 cgi-bin/htmlEnd.cgi

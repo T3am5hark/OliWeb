@@ -1,46 +1,80 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-    <title>Raspberry Pi!!!</title>
-    <meta name="viewport" content="width=device-width initial-scale=1 " /> 
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- No zoom 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  -->
+
+  <!-- With zoom -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0>
+
+  <title>Raspberry Pi!</title>
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+
 </head>
 <body>
 
 <p>
-<font face="arial">
-<h3>
+<h4>
 <a href="http://www.raspberrypi.org">
 <img src="piLogo.png" height="24" width="24"/></a>
 Hello, this is Raspberry Pi!
 <a href="http://www.raspberrypi.org">
 <img src="piLogo.png" height="24" width="24"/></a>
 <br>
-</h3>
-
+Raspberry Pi hosting OliWeb 1.0.0 <br>
+[Powered by IvySox 1.0.0]
+<br>
+</h4>
 
 <h3>
-<img src="BigMap.png" width="305" /><br>
+<img src="BigMap.png" class="img-responsive" /><br>
 <!--
 <a href="motion/recent_motion.jpg">
-<img src="motion/recent_motion.jpg" width="305" />
+<img src="motion/recent_motion.jpg" class="img-responsive" />
 </a><br>
 -->
 
 </h3>
 
 <h2>
-<a href="ShowWebLog.cgi">Show OliWeb Logs</a><br>
-<a href="ShowConfigXML.cgi">Show OliWeb Config</a><br>
-<a href="abap.jpg">ABAP!!!</a><br>
-<a href="http://beej.us/guide/bgnet/output/print/bgnet_USLetter.pdf">Beej's Guide to Network Programming</a><br>
-<a href="ThisLinkDoesNot.Exist">Test 404 FNF</a><br>
+
+Scripts:<br>
 <a href="cgiScripts.html">CGI Scripts</a><br>
 <a href="gpio.html">GPIO Controls</a><br>
+
+<br>
+
+Testing:<br>
 <a href="input.html">Input tester</a><br>
 <a href="formInput.html">Form Input Tester</a><br>
 <a href="sample.php">Test PHP execution</a><br>
+<a href="ThisLinkDoesNot.Exist">Test 404 FNF</a><br>
+
+<br>
+<a href="abap.jpg">ABAP!!!</a><br>
+
+
+
+<!--
+<a href="ShowWebLog.cgi">Show OliWeb Logs</a><br>
+<a href="ShowConfigXML.cgi">Show OliWeb Config</a><br>
+<a href="http://beej.us/guide/bgnet/output/print/bgnet_USLetter.pdf">Beej's Guide to Network Programming</a><br>
+<a href="cgiScripts.html">CGI Scripts</a><br>
+<a href="gpio.html">GPIO Controls</a><br>
 <a href="video/out.avi">Video Capture</a><br>
+-->
 
 </h2>
 
@@ -57,9 +91,10 @@ Raspberry Pi hosting <a href="https://github.com/m2ware/OliWeb">OliWeb 1.0.0</a>
 </font>
 </p>
 
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script scr="https://code.jquery.com/jquery.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script scr="js/bootstrap.min.js"></script>
+
 </body>
 </html>
-
-
-
-

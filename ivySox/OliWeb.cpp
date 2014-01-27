@@ -71,9 +71,10 @@ void OliWeb::openLogFile()
 {
     // Open Log File
     log.open(logFileName.c_str(), ios::app );
-    writeLog("******************");
-    writeLog("** OliWeb 0.1.7 **");
-    writeLog("******************");
+    writeLog("******************",false);
+    writeLog("** OliWeb 0.8.1 **",false);
+    writeLog("******************",false);
+    writeLog("Starting OliWeb");
 }
 
 bool OliWeb::logIsOpen()
@@ -100,6 +101,7 @@ int OliWeb::run()
     {
         // Listen for requests
         writeLog("Waiting for inbound request.");
+        writeLog("",false);
         handleInboundRequest();
     }
 }
@@ -110,7 +112,7 @@ int OliWeb::fetchFile(InboundRequest *request)
 
     pthread_mutex_lock(&ivySoxMutex);
 
-    writeLog("Checking for " + requestedFile);
+    writeLog("Fetching " + requestedFile);
 
     // Check to see if requested file exists
     ifstream reqFileStream(requestedFile.c_str());
@@ -121,6 +123,7 @@ int OliWeb::fetchFile(InboundRequest *request)
     } else {
         // Finally, drop a 404
         sendStatusNotFound(request);
+        writeLog("File not found, sending 404");
         requestedFile = rootFileDirectory + "/" + fileNotFoundPage;
     }
 
@@ -128,7 +131,7 @@ int OliWeb::fetchFile(InboundRequest *request)
     int bytesSent = -1;
     if (requestedFile != "")
     {
-        writeLog("Sending " + requestedFile);
+        //writeLog("Sending " + requestedFile, false);
         bytesSent = (request->inbound).sendFile(requestedFile);
         writeLog("Sent " + toString(bytesSent) + " bytes.");
     } else {
@@ -177,7 +180,7 @@ void OliWeb::getArgumentList(InboundRequest *request)
                 anArg = request->requestedFile.substr(a,b-a-1);
             }
             request->scriptArguments += " --" + anArg;
-            writeLog(anArg);
+            //writeLog(anArg);
         }
     }
 }
@@ -221,9 +224,7 @@ void OliWeb::invoke(InboundRequest *request, string cmd,
     {
         // Parent process - wait.
         int waitStatus;
-        writeLog("Parent Waiting...");
         waitpid(processId, &waitStatus, 0);
-        writeLog("Child process complete!!");
     } else {
         // Child process - set environment vars and exec command.
         //setenv("QUERY_STRING", request->requestedFile.c_str(), 1);
@@ -252,9 +253,7 @@ void OliWeb::invoke(InboundRequest *request, string cmd,
         }
 
         dup2( savedStdOut, STDOUT_FILENO );
-        writeLog("CGI Execution Complete!!");
-        writeLog("CGI return value = " + toString(returnValue));
-        //close(fileDescriptor);
+        writeLog("CGI return value = " + toString(returnValue),false);
         _exit(0);
     }
 
@@ -265,11 +264,9 @@ void OliWeb::invoke(InboundRequest *request, string cmd,
     {
         ivySox.sendMessage("Error invoking " + request->scriptFilename + ".");
         ivySox.closeInbound();
-        //ivySox.closeSocket(request->socketNumber);
     }
     else
     {
-        //requestedFile = outputFilename;
         request->requestedFile=outputFilename;
         fetchFile(request);
         cmd = "rm " + outputFilename;
@@ -328,7 +325,6 @@ void OliWeb::handleInboundRequest()
     pthread_attr_init(&threadAttribute);
     pthread_attr_setdetachstate(&threadAttribute, PTHREAD_CREATE_DETACHED);
     int result = pthread_create( &aThread, &threadAttribute, threadEntryPoint, (void *) request);
-    writeLog("Thread launch result = " + toString(result));
 
 }
 
@@ -349,25 +345,25 @@ void OliWeb::threadRequestHandler(InboundRequest *request)
     //IvySox *ivy = &ivySox;
     //pthread_mutex_lock(&ivySoxMutex);
     writeLog("Received inbound request from " + request->inbound.getIpAddress() );
-    writeLog("Socket numbr = " + toString(request->socketNumber));
+    //writeLog("Socket numbr = " + toString(request->socketNumber));
     request->receivedBytes = request->inbound.receive(request->inboundBuffer, INBOUND_BUFFER_SIZE);
     request->requestString = ivySox.messageToString(request->inboundBuffer, request->receivedBytes);
     writeLog(request->requestString, false);
-    writeLog("(" + toString(request->receivedBytes) + " bytes)");
+    writeLog("(" + toString(request->receivedBytes) + " bytes)",false);
     // Parse the request string to get the file or script being requested
     // request->requestedFile = parseRequest(request->requestString);
     // request->queryString = extractQueryArgs(request->requestedFile);
     request->parse(defaultFileName);
 
-    writeLog("Requested File = [" + request->requestedFile + "]");
+    writeLog("Requested File = [" + request->requestedFile + "]",false);
     if (isCgi(request->requestedFile))
     {
-        writeLog("Request type = CGI script");
+        //writeLog("Request type = CGI script");
         invokeCgi(request);
     }
     else if (isPhp(request->requestedFile))
     {
-        writeLog("Request type = PHP script");
+        //writeLog("Request type = PHP script");
         invokePhp(request);
     }
     else {
@@ -547,11 +543,11 @@ int OliWeb::configXml()
     string msg = "Opening ";
     msg += OLIWEB_CONFIG;
     writeLog(msg);
-    writeLog("Parsing XML (tinyxml2)");
+    //writeLog("Parsing XML (tinyxml2)");
     //config.Parse(OLIWEB_CONFIG);
     //config.Parse("utf8test.xml");
     config.LoadFile(OLIWEB_CONFIG);
-    writeLog("Errorcode = " + toString(config.ErrorID()));
+    //writeLog("Errorcode = " + toString(config.ErrorID()));
 
     //  Pick apart the XML for config options...
     XMLElement *root = config.RootElement();
@@ -565,7 +561,7 @@ int OliWeb::configXml()
     XMLElement *parserElement = root->FirstChildElement("ConfigurationSettings");
     if (parserElement != NULL)
     {
-        writeLog("Reading configuration parameters");
+        writeLog("Reading configuration parameters",false);
         XMLElement *configElement = parserElement->FirstChildElement();
 
         while (configElement != NULL)
@@ -573,7 +569,7 @@ int OliWeb::configXml()
             string settingName = configElement->Name();
             string value = configElement->Attribute("value");
 
-            writeLog(settingName + " = " + value);
+            writeLog(settingName + " = " + value,false);
 
             if ( settingName == "PortNumber")
                     portNumber = configElement->IntAttribute("value");
