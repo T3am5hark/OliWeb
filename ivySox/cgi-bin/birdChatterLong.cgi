@@ -43,3 +43,5 @@ gpioTester 57 4
 sleep 0.5
 gpioTester 150 1
 gpioTester 14 20
+
+util/redirect.sh gpio.html
