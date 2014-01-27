@@ -1,1 +1,2 @@
-cat htmlFooter.txt
+#cat htmlFooter.txt
+cat bootstrapFooter.txt

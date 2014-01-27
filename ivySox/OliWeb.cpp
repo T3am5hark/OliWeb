@@ -302,7 +302,9 @@ bool OliWeb::isHtml(string str)
     if (str.find(".html") != string::npos ||
         str.find(".htm") != string::npos ||
         str.find(".HTML") != string::npos ||
-        str.find(".HTM") != string::npos )
+        str.find(".HTM") != string::npos ||
+        str.find(".css") != string::npos ||
+        str.find(".CSS") != string::npos )
         return true;
     return false;
 }
