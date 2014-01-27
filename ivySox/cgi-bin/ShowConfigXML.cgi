@@ -1,3 +1,4 @@
-echo "ShowConfigXML.cgi invoked:"
-echo ".................."
+#echo "ShowConfigXML.cgi invoked:"
+#echo ".........................."
+
 cat OliWebConfig.xml
