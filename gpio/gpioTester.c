@@ -2,7 +2,7 @@
 // Author:    Jeff Moore
 // Date:      June 05 2013
 //
-// This program pulses (currently hard-coded) gpio pins at a rate specified 
+// This program pulses (currently hard-coded) gpio pins at a rate specified
 // via command line args.
 //
 // gpioTester [pulseDuration] [repCount]
@@ -56,13 +56,18 @@ int main(int argc, char **argv)
   int g,rep;
   int i=0;
   int repCount = 10;
+  double dutyCycle = 0.50;
   time_t waitTime = 1000000*30; // Default 30ms per blink
 
   // Wait time in ms
-  if (argc > 1) waitTime=atoi( argv[1] )*1000000;
+  if (argc > 1) waitTime=atoi( argv[1] )*1000;
   // number of reps
   if (argc > 2) repCount=atoi( argv[2] );
+  // pulse width duty cycle
+  if (argc > 3) dutyCycle=(double)(atoi(argv[3])/100.0);
 
+  if (dutyCycle > 1.0) dutyCycle = 1.0;
+  if (dutyCycle < 0.0) dutyCycle = 0.0;
 
   // Set up gpi pointer for direct register access
   setup_io();
@@ -70,7 +75,16 @@ int main(int argc, char **argv)
   // Switch GPIO 7..11 to output mode
   struct timespec waitStruct;
   waitStruct.tv_sec = 0;
-  waitStruct.tv_nsec = waitTime;
+  waitStruct.tv_nsec = (time_t)(waitTime*dutyCycle);
+
+  struct timespec waitStructLo;
+  waitStructLo.tv_sec = 0;
+  waitStructLo.tv_nsec = (time_t)(waitTime*(1.0-dutyCycle));
+
+  //printf("Hi:   %d\n", waitStruct.tv_nsec);
+  //printf("Lo:   %d\n", waitStructLo.tv_nsec);
+  //printf("Reps: %d\n", repCount);
+  //printf("T(ns):%d\n", waitTime);
 
   /* You are about to change the GPIO settings of your computer.          *
    * Mess this up and it will stop working!                               *
@@ -91,21 +105,18 @@ int main(int argc, char **argv)
     //for (i = 0;i<nPins;i++)
     //{
        GPIO_SET = 1<<pins[0];
+       GPIO_SET = 1<<pins[1];
+       GPIO_SET = 1<<pins[2];
        //sleep(1);
        nanosleep(&waitStruct, NULL);
        GPIO_CLR = 1<<pins[0];
-       if (rep%2 == 0) GPIO_SET = 1<<pins[2];
-       if (rep%2 == 1) GPIO_CLR = 1<<pins[2];
-       if (rep%3 == 0) GPIO_SET = 1<<pins[1];
-       if (rep%3 == 1) GPIO_CLR = 1<<pins[1];
-       nanosleep(&waitStruct,NULL);
-    //}
-    //for (i =0; i<nPins; i++)
-    //{
-    //  GPIO_CLR = 1<<pins[i];
-      //sleep(1);
-    //  nanosleep(&waitStruct, NULL);
-    //}
+       GPIO_CLR = 1<<pins[1];
+       GPIO_CLR = 1<<pins[2];
+       //if (rep%2 == 0) GPIO_SET = 1<<pins[2];
+       //if (rep%2 == 1) GPIO_CLR = 1<<pins[2];
+       //if (rep%3 == 0) GPIO_SET = 1<<pins[1];
+       //if (rep%3 == 1) GPIO_CLR = 1<<pins[1];
+       nanosleep(&waitStructLo,NULL);
   }
 
   GPIO_CLR = 1<<pins[0] | 1<<pins[1] | 1<<pins[2];
