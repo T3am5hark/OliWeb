@@ -23,11 +23,17 @@ class FifoReader
     ~FifoReader();
 
     static void createSystemFifo( string fifoName, int permissions);
+    void openFifo();
+    void openFifo(string inFifoName);
+    void closeFifo();
+    string readFifo();
 
     void listenAndRunOnMessage( void (*callBack)(char *, int, FifoReader *) );
     static void defaultHandler( char *message, int nRead, FifoReader * reader);
 
     private:
+
+    int fd;
 
     char readBuffer[READ_BUFFER_SIZE];
 

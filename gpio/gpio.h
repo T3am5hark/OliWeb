@@ -26,12 +26,12 @@
 #define PAGE_SIZE (4*1024)
 #define BLOCK_SIZE (4*1024)
 
-int  mem_fd;
-char *gpio_mem, *gpio_map;
-char *spi0_mem, *spi0_map;
+extern int  mem_fd;
+extern char *gpio_mem, *gpio_map;
+extern char *spi0_mem, *spi0_map;
 
 // I/O access
-volatile unsigned *gpio;
+extern volatile unsigned *gpio;
 
 
 // GPIO setup macros. Always use INP_GPIO(x) before using OUT_GPIO(x) or SET_GPIO_ALT(x,y)
@@ -48,7 +48,6 @@ volatile unsigned *gpio;
 #define INIT_OUT(g) INP_GPIO(g); OUT_GPIO(g)
 
 void setup_io();
-
 void init_output(int g);
 void init_input(int g);
 

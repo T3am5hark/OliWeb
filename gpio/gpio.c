@@ -6,6 +6,15 @@
 
 #include "gpio.h"
 
+
+int  mem_fd;
+char *gpio_mem, *gpio_map;
+char *spi0_mem, *spi0_map;
+
+// I/O access
+volatile unsigned *gpio;
+
+
 //
 // Set up a memory regions to access GPIO
 //

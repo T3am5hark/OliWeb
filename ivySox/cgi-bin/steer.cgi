@@ -1,3 +1,1 @@
-echo $1
-echo $2
-gpioTester 10000 $1 $2
+gpio_pwm 22 10000 $1 $2

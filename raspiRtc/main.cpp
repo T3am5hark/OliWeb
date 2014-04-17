@@ -5,15 +5,24 @@
 #include <iostream>
 #include <string.h>
 #include <sstream>
+#include "stringTo.h"
+#include "Agent.h"
 
 #define CMD_BUFFER_LEN 5
 string cmds[5];
+
+using namespace RaspiController;
 
 //GpioPwm pwm;
 void handler( char * buffer, int nRead, FifoReader *reader);
 
 int main( int argc, char **argv)
 {
+
+    Agent agent("Camera");
+
+    agent.configureFromXmlFile("controller.xml");
+
     cout << "Start." << endl << flush;
 
     int fd = open("/dev/mem", O_RDWR|O_SYNC);
@@ -29,7 +38,7 @@ int main( int argc, char **argv)
     cout << "done." << endl << flush;
 
     cout << "chirp!" << endl;
-    GpioPwm::pulse(17, 50000, 5, 0.5);
+    //GpioPwm::pulse(17, 50000, 5, 0.5);
 
     reader.listenAndRunOnMessage( &handler );
 

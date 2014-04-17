@@ -10,7 +10,7 @@ CC	= 	g++
 INCLUDE	= 	-I'../tinyxml'
 FLAGS	= 	$(DEBUG) $(INCLUDE) -g -pthread -std=c++0x -fpermissive
 SOURCE2	= 	IvySox.cpp OliWeb.cpp main.cpp ../tinyxml/tinyxml2.cpp ../gpio/gpio.c
-SOURCE  =       FifoReader.cpp gpio.cpp GpioPwm.cpp main.cpp ../tinyxml/tinyxml2.cpp
+SOURCE  =       FifoReader.cpp gpio.cpp GpioPwm.cpp main.cpp ../tinyxml/tinyxml2.cpp Agent.cpp
 OBJ 	=	$(SOURCE:.cpp=.o)
 OBJOBJ	=	IvySox.o OliWeb.o main.o tinyXml.o gpio.o 
 LIBS	=	-lpthread

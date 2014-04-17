@@ -141,7 +141,7 @@ class IvySox
     struct addrinfo hints;
     bool useIpv6;
     //in_addr internetAddress;
-    
+
 };
 
 int charArrayToInt(const char *array);

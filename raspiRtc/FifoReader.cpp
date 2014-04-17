@@ -47,6 +47,33 @@ void FifoReader::listenAndRunOnMessage( void  (*callBack)(char *, int, FifoReade
     close(fd);
 }
 
+string FifoReader::readFifo()
+{
+    string bufferContents="";
+    if (fd >0)
+    {
+        int nRead = read(fd, readBuffer, READ_BUFFER_SIZE);
+        bufferContents=readBuffer;
+    }
+    return bufferContents;
+}
+
+void FifoReader::openFifo(string inFifoName)
+{
+    fifoName=inFifoName;
+    openFifo();
+}
+
+void FifoReader::openFifo()
+{
+    fd = open(fifoName.c_str(), O_RDONLY);
+}
+
+void FifoReader::closeFifo()
+{
+    close(fd);
+}
+
 void FifoReader::defaultHandler( char * buffer, int nRead, FifoReader *reader)
 {
     std::cout << endl << "Received message: " << endl;

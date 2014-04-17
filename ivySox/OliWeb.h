@@ -86,7 +86,7 @@ class OliWeb
     private:
 
     int configXml();
-    void writeLog(string logMessage, bool timestamp = true);
+    void writeLog(const string &logMessage, const bool timestamp = true);
     void handleInboundRequest();
     //string parseRequest(string request);
     //static string extractQueryArgs(string url);

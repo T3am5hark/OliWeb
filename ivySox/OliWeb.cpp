@@ -506,7 +506,7 @@ string lowerCase(string input)
     return input;
 }
 
-void OliWeb::writeLog(string logMessage, bool timestamp)
+void OliWeb::writeLog(const string &logMessage, const bool timestamp)
 {
     // Thread safety
     //pthread_mutex_lock(&logMutex);
