@@ -19,7 +19,9 @@ void handler( char * buffer, int nRead, FifoReader *reader);
 int main( int argc, char **argv)
 {
 
-    Agent agent("Camera");
+    //Agent agent("Camera");
+    Agent agent("ChirpBox");
+
 
     agent.configureFromXmlFile("controller.xml");
 
