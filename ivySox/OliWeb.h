@@ -74,6 +74,13 @@ class InboundRequest
 
 };
 
+class OliWebConfig
+{
+    public:
+
+
+};
+
 class OliWeb
 {
     public:
@@ -111,6 +118,8 @@ class OliWeb
     string fileNotFoundPage;
     string scriptDirectory;
     string logFileName;
+    string phpEngine;
+    string phpFlags;
 
     IvySox ivySox;
     XMLDocument config;

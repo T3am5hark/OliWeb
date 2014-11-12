@@ -55,6 +55,8 @@ OliWeb::OliWeb()
     fileNotFoundPage = "oops404.html";
     scriptDirectory = "cgi-bin";
     logFileName = "OliWeb.log";
+    phpEngine = "/usr/bin/php";
+    phpFlags = "-f";
 
     threadIndex = 0;
     configXml();
@@ -72,7 +74,7 @@ void OliWeb::openLogFile()
     // Open Log File
     log.open(logFileName.c_str(), ios::app );
     writeLog("******************",false);
-    writeLog("** OliWeb 0.8.1 **",false);
+    writeLog("** OliWeb 0.9.1 **",false);
     writeLog("******************",false);
     writeLog("Starting OliWeb");
 }
@@ -201,8 +203,10 @@ void OliWeb::invokePhp(InboundRequest *request)
 {
     getScriptFilename(request);
     string target = rootFileDirectory + request->scriptFilename;
-    string flags = "-f";
-    string cmd = "/usr/bin/php";
+    //string flags = "-f";
+    //string cmd = "/usr/bin/php";
+    string flags = phpFlags;
+    string cmd = phpEngine;
     invoke(request, cmd, flags, target);
 }
 
@@ -211,7 +215,8 @@ void OliWeb::invoke(InboundRequest *request, string cmd,
 {
     string outputFilename = "scriptOutput." + toString(request->socketNumber);
 
-    writeLog("Invoking: '" + cmd + "'.");
+    writeLog("Invoking: '" + cmd + " " + flags + "'.");
+    writeLog("Target:   '" + target + "'");
     //int returnValue = system(cmd.c_str());
     pid_t processId = fork();
     int returnValue = 0;
@@ -583,6 +588,10 @@ int OliWeb::configXml()
                     fileNotFoundPage = value;
             else if ( settingName == "LogFile")
                     logFileName = value;
+            else if ( settingName == "PhpEngine")
+                    phpEngine = value;
+            else if ( settingName == "PhpFlags")
+                    phpFlags = value;
             else    writeLog("Setting not recognized!!");
 
             configElement = configElement->NextSiblingElement();

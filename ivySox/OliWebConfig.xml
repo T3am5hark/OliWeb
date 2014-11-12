@@ -7,5 +7,7 @@
         <FileNotFoundPage value="oops404.html"></FileNotFoundPage>
         <ScriptDirectory value="cgi-bin"></ScriptDirectory>
         <LogFile value="OliWeb.log"></LogFile>
-</ConfigurationSettings>
+        <PhpEngine value="/usr/bin/php"/>
+        <PhpFlags value="-f"/>
+    </ConfigurationSettings>
 </OliWebConfig>
