@@ -71,8 +71,16 @@ class InboundRequest
 
     private:
 
-
 };
+
+
+typedef enum LogLevel
+{
+    none = 0,
+    minimal = 1,
+    commands = 2,
+    full = 3
+} LogLevel;
 
 class OliWebConfig
 {
@@ -120,6 +128,8 @@ class OliWeb
     string logFileName;
     string phpEngine;
     string phpFlags;
+    string utilDirectory;
+    LogLevel logLevel;
 
     IvySox ivySox;
     XMLDocument config;

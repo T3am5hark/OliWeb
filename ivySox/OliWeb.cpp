@@ -235,9 +235,10 @@ void OliWeb::invoke(InboundRequest *request, string cmd,
         //setenv("QUERY_STRING", request->requestedFile.c_str(), 1);
         setenv("QUERY_STRING", request->queryString.c_str(), 1);
         setenv("REQUEST_METHOD", request->method.c_str(), 1);
-        setenv("CGI_BIN", scriptDirectory.c_str(),1);
-        setenv("WEB_ROOT",rootFileDirectory.c_str(),1);
-        setenv("BODY", request->body.c_str(),1);
+        setenv("CGI_BIN", scriptDirectory.c_str(), 1);
+        setenv("WEB_ROOT",rootFileDirectory.c_str(), 1);
+        setenv("BODY", request->body.c_str(), 1);
+        setenv("UTIL", utilDirectory.c_str(), 1);
         // Redirect stdout to go where we want to pick it up.
         mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
         int fileDescriptor = open(outputFilename.c_str(),
@@ -592,6 +593,8 @@ int OliWeb::configXml()
                     phpEngine = value;
             else if ( settingName == "PhpFlags")
                     phpFlags = value;
+            else if ( settingName == "UtilDirectory")
+                    utilDirectory = value;
             else    writeLog("Setting not recognized!!");
 
             configElement = configElement->NextSiblingElement();

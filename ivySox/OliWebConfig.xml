@@ -9,5 +9,6 @@
         <LogFile value="OliWeb.log"></LogFile>
         <PhpEngine value="/usr/bin/php"/>
         <PhpFlags value="-f"/>
+        <UtilDirectory value="util" />
     </ConfigurationSettings>
 </OliWebConfig>
