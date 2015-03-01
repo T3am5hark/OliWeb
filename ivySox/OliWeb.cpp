@@ -475,6 +475,13 @@ void InboundRequest::parse(string defaultFilename)
         protocol = sub3;
     }
 
+    if ( upperCase(sub1).compare("PUT") == 0 && sub2.compare("/") != 0)
+    {
+        method = "PUT";
+        requestedFile = sub2;
+        protocol = sub3;
+    }
+
     size_t a = requestedFile.find("?");
     if ( a != string::npos && a < requestedFile.length() )
     {

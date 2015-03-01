@@ -36,6 +36,7 @@ Hello, this is Raspberry Pi!
 <br>
 </h4>
 
+
 <form name="input" action="testForm.cgi" method="post">
 Parameter1 <input type="text" name="parameter1"><br>
 
@@ -45,9 +46,20 @@ Parameter1 <input type="text" name="parameter1"><br>
 <textarea rows="5" cols="35" name="TextBox">
 Text can be entered here!
 </textarea><br>
+<input type="submit" value="Go! (CGI-POST)"><br>
+</form>
+<br>
+<hr>
+<br>
 
 
-<input type="submit" value="Go! (CGI)"><br>
+<form name="put-cgi" action="testFormPut.cgi" method="put">
+Parameter1 <input type="text" name="parameter1"><br>
+
+<textarea rows="5" cols="35" name="TextBox">
+Text here!
+</textarea><br>
+<input type="submit" value="Go! (CGI-PUT)"><br>
 </form>
 <br>
 <hr>
