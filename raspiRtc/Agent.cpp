@@ -17,6 +17,8 @@ namespace RaspiController
   {
   }
 
+  /// Agent::Agent(const string &agentName)
+  /// Init with name (name is used to configure from XML)
   Agent::Agent(const string &agentName)
   {
       name = agentName;
@@ -27,9 +29,13 @@ namespace RaspiController
 
   void Agent::run()
   {
-      FifoReader::createSystemFifo( listener.fifoName, 0777);
+      writeLog("Creating fifo buffer: " + listener.fifoName);
+      FifoReader::createSystemFifo( listener.fifoName, O_CREAT | 0666);
+      writeLog("Opening fifo");
       listener.openFifo();
+      writeLog("Initializing Gpio.");
       GpioPwm::setupIo();
+      writeLog("Running agent.");
       while (1)
       {
           if ( readFifo() ) handleMessage();
@@ -38,6 +44,8 @@ namespace RaspiController
       listener.closeFifo();
   }
 
+  /// Agent::readFifo()
+  /// Read from the fifo buffer and populate the message string
   bool Agent::readFifo()
   {
       message = listener.readFifo();
@@ -47,6 +55,9 @@ namespace RaspiController
   void Agent::handleMessage()
   {
       parseTokens();
+      writeLog("Received command: " + message);
+      executeCommand();
+
   }
 
   void Agent::parseTokens()
@@ -59,7 +70,6 @@ namespace RaspiController
           //if ( tokens[i].length() == 0 ) break;
       }
 
-      executeCommand();
   }
 
   void Agent::executeCommand()
@@ -95,17 +105,31 @@ namespace RaspiController
               case ActionType::CameraSnapshot:
                   break;
               case ActionType::SendPulseTrainToPin :
-                  sendPulseTrainToPin(action);
-                  break;
+                   sendPulseTrainToPin(action);
+                   break;
+              case ActionType::SendPulseTrainToPins :
+                   //sendPulseTrainToPins(action);
+                   break;
               case ActionType::SetPinState :
                   break;
               case ActionType::GoTo :
                   break;
               case ActionType::HaltExecution :
                   break;
+              case ActionType::Debug :
+                  debug();
+                  break;
               default:
                   break;
           }
+  }
+
+  void Agent::debug()
+  {
+      writeLog("**** DEBUG ****");
+      writeLog("Current State: " + state->name);
+      writeLog("***************");
+
   }
 
   void Agent::sendPulseTrainToPin(const Action &action)
@@ -115,6 +139,11 @@ namespace RaspiController
     int nPulses = stringTo<int>(action.parameters[2]);
     double dutyCycle = stringTo<double>(action.parameters[3]);
     GpioPwm::pulse( pin, periodMicroSeconds, nPulses, dutyCycle );
+  }
+
+  void Agent::sendPulseTrainToPins(const Action &action)
+  {
+
   }
 
   void Agent::clearTokens()
@@ -136,9 +165,74 @@ namespace RaspiController
       //return &(it->second);
   }
 
+  Action::Action(XMLElement *xml)
+  {
+      cout << "Some Action" << endl;
+  }
+
+  Command::Command()
+  {
+
+  }
+
+  Command::Command(XMLElement *xml)
+  {
+      XMLElement *actionXml = xml->FirstChildElement("Action");
+
+      while (actionXml)
+      {
+          cout << "Action!" << endl;
+          Action action(actionXml);
+          actionXml = actionXml->NextSiblingElement("Action");
+      }
+  }
+
+  State::State()
+  {
+  }
+
+  State::State(XMLElement *xml)
+  {
+
+      name = xml->Attribute("name");
+
+      XMLElement *cmdXml = xml->FirstChildElement("Command");
+
+      while (cmdXml)
+      {
+          string cmdName = cmdXml->Attribute("name");
+          cout << "Adding command: " << cmdName << endl;
+          Command command(cmdXml);
+          //validCommands.Add(cmdName, command);
+          validCommands[cmdName] = command;
+          cmdXml = cmdXml->NextSiblingElement("Command");
+      }
+  }
+
   void Agent::configureFromXml(XMLElement *agentElement)
   {
-      
+      // Configure states first
+      XMLElement *aState = agentElement->FirstChildElement("States")->
+                           FirstChildElement("State");
+      while (aState)
+      {
+          string stateName = aState->Attribute("name");
+          cout << "Adding state: " << stateName << endl;
+          State state(aState);
+          //stateMetaData.Add(stateName, state);
+          stateMetaData[stateName] = state;
+          aState = aState->NextSiblingElement("State");
+      }
+      defaultState = &(stateMetaData.begin()->second);
+      string defaultStateName = agentElement->Attribute("defaultState");
+      if ( defaultStateName.length() > 0 )
+      {
+         map<string, State>::iterator it = stateMetaData.find( defaultStateName );
+         if ( it != stateMetaData.end() ) defaultState=&(it->second);
+      }
+      state = defaultState;
+      cout << "InitialState = " + state->name << endl;
+
   }
 
   void Agent::configureFromXmlFile(const string &filename)
@@ -167,15 +261,6 @@ namespace RaspiController
           return;
       }
 
-      /*
-      XMLElement *controllerElement = root->FirstChildElement("Controller");
-      if ( controllerElement == NULL)
-      {
-          writeLog("Did not find controller element.");
-          return;
-      }*/
-
-      //XMLElement *agentElement = controllerElement->FirstChildElement("Agent");
       XMLElement *agentElement = root->FirstChildElement("Agents")->
                                  FirstChildElement("Agent");
 
@@ -189,7 +274,7 @@ namespace RaspiController
               configureFromXml(agentElement);
               return;
           }
-          agentElement=agentElement->NextSiblingElement();
+          agentElement=agentElement->NextSiblingElement("Agent");
       }
       writeLog("Could not find Agent config with name \"" + name + "\"");
 
@@ -197,7 +282,7 @@ namespace RaspiController
 
   void Agent::writeLog(const string &message)
   {
-      cout << message << endl;
+      cout << message << endl << flush;
   }
 
 }

@@ -3,6 +3,8 @@ cgi-bin/htmlStart.cgi
 echo '<H3><font face="arial" color="C8A055">'
 echo 'Taking screenshot...<br>'
 
+#fswebcam -r 160x90 -d /dev/video0 -v web/snapshot/snapshot.jpeg 
+#fswebcam -r 320x200 -d /dev/video0 -v web/snapshot/snapshot.jpeg 
 fswebcam -r 640x472 -d /dev/video0 -v web/snapshot/snapshot.jpeg 
 #fswebcam -r 320x240 -d /dev/video1 -v web/snapshot/snapshot.jpeg
 #mplayer -vo jpeg -frames 1 driver=v4l2:width=320:height=200:device=/dev/video0 tv:// 

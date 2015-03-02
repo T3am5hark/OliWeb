@@ -50,10 +50,11 @@ void FifoReader::listenAndRunOnMessage( void  (*callBack)(char *, int, FifoReade
 string FifoReader::readFifo()
 {
     string bufferContents="";
+    readBuffer[0] = 0; // Null-terminate this thing
     if (fd >0)
     {
         int nRead = read(fd, readBuffer, READ_BUFFER_SIZE);
-        bufferContents=readBuffer;
+        if (nRead > 0) bufferContents=readBuffer;
     }
     return bufferContents;
 }

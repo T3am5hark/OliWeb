@@ -37,8 +37,27 @@ void GpioPwm::pulse(int pin, int pulseTimeMs,
         nanosleep(&waitStructLo,NULL);
     }
 
-    clr_pin( pin );
+    //clr_pin( pin );
 
 }
 
+void GpioPwm::pulse(const set<int> &pins, int pulseTimeMs,
+                    int pulseCount, double dutyCycle)
+{
+    struct timespec waitStructHi;
+    struct timespec waitStructLo;
+    waitStructHi.tv_sec = 0;
+    waitStructHi.tv_nsec = (time_t)(pulseTimeMs*dutyCycle*1000);
+    waitStructLo.tv_sec = 0;
+    waitStructLo.tv_nsec = (time_t)(pulseTimeMs*(1.0-dutyCycle)*1000);
+
+    for (int i = 0; i < pulseCount; i++)
+    {
+        for (set<int>::iterator it=pins.begin(); it!=pins.end(); ++it) set_pin(*it);
+        nanosleep(&waitStructHi, NULL);
+        for (set<int>::iterator it=pins.begin(); it!=pins.end(); ++it) clr_pin(*it);
+        nanosleep(&waitStructLo,NULL);
+    }
+
+}
 
