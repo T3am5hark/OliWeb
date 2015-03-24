@@ -7,6 +7,10 @@ echo "BODY:           " $BODY
 echo "UTIL:           " $UTIL
 echo "......"
 
+TEENSY="/dev/ttyACM0"
+echo "TEENSY:         " $TEENSY
+echo "......"
+
 LINE1="$($UTIL/GetProperty line1 $QUERY_STRING)"
 LINE2="$($UTIL/GetProperty line2 $QUERY_STRING)"
 
@@ -14,6 +18,6 @@ echo "line1 = " $LINE1
 echo "line2 = " $LINE2
 
 echo -n $LINE1 > $TEENSY
-sleep 0.125
+sleep 0.05
 echo -n $LINE2 > $TEENSY
 
