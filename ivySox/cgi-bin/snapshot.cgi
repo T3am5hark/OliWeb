@@ -3,7 +3,10 @@ cgi-bin/htmlStart.cgi
 echo '<H3><font face="arial" color="C8A055">'
 echo 'Taking screenshot...<br>'
 
-fswebcam -r 640x472 -d /dev/video0 -v web/snapshot/snapshot.jpeg 
+#fswebcam -r 160x90 -d /dev/video0 -v web/snapshot/snapshot.jpeg 
+#fswebcam -r 320x200 -d /dev/video0 -v web/snapshot/snapshot.jpeg 
+#fswebcam -r 640x472 -d /dev/video0 -v web/snapshot/snapshot.jpeg 
+fswebcam -r 640x472 -d /dev/video0 -v --jpeg=90 web/snapshot/snapshot.jpeg 
 #fswebcam -r 320x240 -d /dev/video1 -v web/snapshot/snapshot.jpeg
 #mplayer -vo jpeg -frames 1 driver=v4l2:width=320:height=200:device=/dev/video0 tv:// 
 #mplayer -vo png driver=v4l2:width=320:height=200:device=/dev/video0 -frames 1 tv:// 
@@ -15,13 +18,13 @@ echo '<a href="archiveSnapshot.cgi">[archive]</a><br>'
 echo '<a href="snapshot.cgi">[re-take]</a><br>'
 
 echo '<H5>'
-echo '<a href="steerAndSnap.cgi?position=5&pulses=100">[LEFT]</a>'
+echo '<a href="steerAndSnap.cgi?position=5&pulses=50">[LEFT]</a>'
 echo '<a href="steerAndSnap.cgi?position=5&pulses=5">[&lt;&lt;]</a>'
 echo '<a href="steerAndSnap.cgi?position=5&pulses=1">[&lt;]</a>'
-echo '<a href="steerAndSnap.cgi?position=15&pulses=50">[CENTER]</a>'
+echo '<a href="steerAndSnap.cgi?position=15&pulses=30">[CENTER]</a>'
 echo '<a href="steerAndSnap.cgi?position=25&pulses=1">[&gt;]</a>'
 echo '<a href="steerAndSnap.cgi?position=25&pulses=5">[&gt;&gt;]</a>'
-echo '<a href="steerAndSnap.cgi?position=25&pulses=100">[RIGHT]</a>'
+echo '<a href="steerAndSnap.cgi?position=25&pulses=50">[RIGHT]</a>'
 echo '</H5>'
 echo '<br>'
 echo '<a href="lsSnapshot.cgi">show snapshot directory</a><br>'

@@ -18,13 +18,16 @@ namespace RaspiController
       TransitionToState = 1,
       CameraSnapshot = 2,
       SendPulseTrainToPin = 3,
-      SetPinState = 4,
-      GoTo = 5,
-      HaltExecution=6,
-      Wait = 7,
-      OnPinStateDo=8,
-      System=9,
-      MessageToAgent=10
+      SendPulseTrainToPins = 4,
+      SetPinState = 5,
+      GoTo = 6,
+      HaltExecution=7,
+      Wait = 8,
+      OnPinStateDo=9,
+      System=10,
+      MessageToAgent=11,
+      Broadcast=12,
+      Debug=13
   };
 
   #define MAX_TOKENS 10
@@ -32,6 +35,7 @@ namespace RaspiController
   class Action
   {
       public:
+      Action(XMLElement *xml);
       ActionType type;
       vector<string> parameters;
   };
@@ -39,6 +43,9 @@ namespace RaspiController
   class Command
   {
       public:
+
+      Command(XMLElement *xml);
+      Command();
       void addAction(const string &name, const Action &action);
       void run(string *parameters[]);
       vector<Action> actionSequence;
@@ -48,6 +55,8 @@ namespace RaspiController
   {
       public:
 
+      State(XMLElement *xml);
+      State();
       string name;
       void addCommand(string name, Command cmd);
       Command *getCommand(const string &name);
@@ -74,6 +83,7 @@ namespace RaspiController
       private:
       void writeLog(const string &message);
       State *state;
+      State *defaultState;
       map<string, State> stateMetaData;
       FifoReader listener;
       void executeAction(const Action &action);
@@ -82,7 +92,9 @@ namespace RaspiController
       void parseTokens();
       void clearTokens();
       void executeCommand();
+      void debug();
       void sendPulseTrainToPin(const Action &action);
+      void sendPulseTrainToPins(const Action &action);
       struct timespec waitStruct;
       string tokens[MAX_TOKENS];
       string message;
@@ -90,6 +102,5 @@ namespace RaspiController
   };
 
 }
-
 
 #endif
