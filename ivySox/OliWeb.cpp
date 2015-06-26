@@ -29,7 +29,7 @@ SOFTWARE.
 #include <sstream>
 #include <stdlib.h>
 #include <unistd.h>
-#include <wait.h>
+#include <sys/wait.h>
 #include <fcntl.h>
 
 using namespace std;

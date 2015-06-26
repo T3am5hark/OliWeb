@@ -1,8 +1,9 @@
 
-gpioTester 12000 4
-gpioTester 25000 3
-sleep 0.125
-gpioTester 75000 1
-gpioTester 14000 10
+gpio_pwm 17 18000 4 75
+gpio_pwm 17 35000 3 75
+sleep 0.085
+gpio_pwm 17 50000 2 50 
+sleep 0.035
+gpio_pwm 17 35000 13 50
 
 util/redirect.sh gpio.html
