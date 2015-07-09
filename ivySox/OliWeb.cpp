@@ -607,4 +607,5 @@ int OliWeb::configXml()
             configElement = configElement->NextSiblingElement();
         }
     }
+    return 0; // Success
 }

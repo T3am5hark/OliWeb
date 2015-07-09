@@ -112,12 +112,12 @@ void IvySox::closeSocket(int socketToClose)
 
 int IvySox::setIpAddress(string ipAddress)
 {
-    setIpAddress(ipAddress.c_str());
+    return setIpAddress(ipAddress.c_str());
 }
 
 int IvySox::setIpAddress(const char *address)
 {
-    inet_pton(AF_INET, address, &(iSocketAddress.sin_addr));
+    return inet_pton(AF_INET, address, &(iSocketAddress.sin_addr));
     // inet_pton(AF_INET6, address, &(iSocketAddress6.sin6_addr));
 }
 
@@ -325,12 +325,12 @@ void IvySox::duplicate(int socketNumberIn, int inboundSocketNumberIn,
 } */
 
 //  ToDo: remove this in favor of connection-based
-int IvySox::receiveInbound(void *message, size_t maxLength)
+int IvySox::receiveInbound(void *message, ssize_t maxLength)
 {
     return( recv( inboundSocketNumber, message, maxLength, 0) );
 }
 
-int InboundConnection::receive(void *message, size_t maxLength)
+int InboundConnection::receive(void *message, ssize_t maxLength)
 {
     return( recv( socketNumber, message, maxLength, 0) );
 }
@@ -353,12 +353,12 @@ string IvySox::messageToString(char *message, int length)
 }
 
 
-int InboundConnection::sendMessage(void *message, size_t length)
+int InboundConnection::sendMessage(void *message, ssize_t length)
 {
-    size_t totalBytes = 0;
+    ssize_t totalBytes = 0;
     while (totalBytes < length)
     {
-        size_t txBytes = sendPartial( (void *)((size_t)message + totalBytes), length-totalBytes );
+        ssize_t txBytes = sendPartial( (void *)((ssize_t)message + totalBytes), length-totalBytes );
         if (txBytes < 0) 
         {
             cout << "??TXN??" << endl;
@@ -372,12 +372,12 @@ int InboundConnection::sendMessage(void *message, size_t length)
     return( totalBytes );
 }
 
-int IvySox::sendMessage(void *message, size_t length)
+int IvySox::sendMessage(void *message, ssize_t length)
 {
-    size_t totalBytes = 0;
+    ssize_t totalBytes = 0;
     while (totalBytes < length)
     {
-        size_t txBytes = sendPartial( (void *)((size_t)message + totalBytes), length-totalBytes );
+        ssize_t txBytes = sendPartial( (void *)((ssize_t)message + totalBytes), length-totalBytes );
         if (txBytes < 0) 
         {
             perror("sendMessage");
@@ -388,25 +388,25 @@ int IvySox::sendMessage(void *message, size_t length)
     return( totalBytes );
 }
 
-int InboundConnection::sendPartial(void *message, size_t length)
+int InboundConnection::sendPartial(void *message, ssize_t length)
 {
     return ( send(socketNumber, message, length, 0) );
 }
 
-int IvySox::sendPartial(void *message, size_t length)
+int IvySox::sendPartial(void *message, ssize_t length)
 {
-    return ( send(inboundSocketNumber, message, length, 0) );
+    return ( ::send(inboundSocketNumber, message, length, 0) );
 }
 
 int InboundConnection::sendMessage(string message)
 {
-    size_t length = strlen( message.c_str() );
+    ssize_t length = strlen( message.c_str() );
     return (sendMessage( (void *)message.c_str(), length));
 }
 
 int IvySox::sendMessage(string message)
 {
-    size_t length = strlen( message.c_str() );
+    ssize_t length = strlen( message.c_str() );
     return (sendMessage( (void *)message.c_str(), length));
 }
 

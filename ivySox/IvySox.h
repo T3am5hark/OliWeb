@@ -69,11 +69,11 @@ class InboundConnection
 
     InboundConnection();
     ~InboundConnection();
-    int receive(void *message, size_t maxLength);
+    int receive(void *message, ssize_t maxLength);
     int sendFile(string filename);
     int sendMessage(string message);
-    int sendMessage(void *message, size_t length);
-    int sendPartial(void *message, size_t length);
+    int sendMessage(void *message, ssize_t length);
+    int sendPartial(void *message, ssize_t length);
     unsigned short int getPortNumber();
     void closeConnection();
     string getIpAddress();
@@ -108,10 +108,10 @@ class IvySox
     //int acceptInbound(IvySox *newSocket);
     int acceptInbound(InboundConnection *inbound);
 
-    int receiveInbound(void *message, size_t maxLength);
-    int sendMessage(void *message, size_t length);
+    int receiveInbound(void *message, ssize_t maxLength);
+    int sendMessage(void *message, ssize_t length);
     int sendMessage(string message);
-    int sendPartial(void *message, size_t length);
+    int sendPartial(void *message, ssize_t length);
     string getErrorMessage(int errorCode);
     int getSocketNumber();
     int bindSocket();
