@@ -89,7 +89,7 @@ int OliWeb::run()
     pthread_t thread;
     // Open the designated port
     writeLog("Opening port " + toString(portNumber) );
-    ivySox.openPort(portNumber);
+    ivySox.openServerOnPort(portNumber);
     // Listen on port
     writeLog("Listening on port " + toString(portNumber) + "...");
     if (ivySox.listenToPort() < 0)

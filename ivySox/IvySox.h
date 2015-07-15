@@ -103,6 +103,7 @@ class IvySox
     int getConnectionInfo(string url, string service);
     int getConnectionInfo(const char *url, const char *service);
     int openPort(int portNumber);
+    int openServerOnPort(int portNumber);
     int listenToPort();
     int acceptInbound();
     //int acceptInbound(IvySox *newSocket);
