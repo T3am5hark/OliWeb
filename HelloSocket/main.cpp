@@ -60,7 +60,7 @@ int main (int argc, char *argv[])
     InboundConnection inboundConnection;
     InboundConnection *inbound = &inboundConnection;
     std::cout << "Opening port...\r\n";
-    int result = listener.openPort(portNumber);
+    int result = listener.openServerOnPort(portNumber);
 
     // Try to listen on port
     if (result < 0 || listener.listenToPort() < 0 )

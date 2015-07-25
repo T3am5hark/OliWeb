@@ -29,7 +29,7 @@ SOFTWARE.
 #include <sstream>
 #include <stdlib.h>
 #include <unistd.h>
-#include <wait.h>
+#include <sys/wait.h>
 #include <fcntl.h>
 
 using namespace std;
@@ -89,7 +89,7 @@ int OliWeb::run()
     pthread_t thread;
     // Open the designated port
     writeLog("Opening port " + toString(portNumber) );
-    ivySox.openPort(portNumber);
+    ivySox.openServerOnPort(portNumber);
     // Listen on port
     writeLog("Listening on port " + toString(portNumber) + "...");
     if (ivySox.listenToPort() < 0)
@@ -607,4 +607,5 @@ int OliWeb::configXml()
             configElement = configElement->NextSiblingElement();
         }
     }
+    return 0; // Success
 }
