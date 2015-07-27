@@ -8,8 +8,16 @@
 #ifndef GPIO_INCLUDE
 #define GPIO_INCLUDE
 
+// Need PI2 defined for BCM2709 - won't work with old base address
+#define PI2
+
 #define BCM2708_PERI_BASE        0x20000000
-#define GPIO_BASE                (BCM2708_PERI_BASE + 0x200000) /* GPIO controller */
+#define BCM2709_PERI_BASE        0x3F000000
+#ifdef PI2
+#define GPIO_BASE                (BCM2709_PERI_BASE + 0x200000)
+#else
+#define GPIO_BASE                (BCM2708_PERI_BASE + 0x200000)
+#endif
 
 
 #include <stdio.h>
