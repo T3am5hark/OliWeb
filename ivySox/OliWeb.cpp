@@ -46,6 +46,26 @@ InboundRequest::InboundRequest(int inboundSocketNumber)
 
 OliWeb::OliWeb()
 {
+    InitDefaults();
+    configXml();
+    openLogFile();
+}
+
+OliWeb::OliWeb(string config)
+{
+    InitDefaults();
+    configFileName=config;
+    configXml();
+    openLogFile();
+}
+
+OliWeb::~OliWeb()
+{
+    log.close();
+}
+
+void OliWeb::InitDefaults()
+{
     // Initialize with default settings
     logMutex = PTHREAD_MUTEX_INITIALIZER;
     ivySoxMutex = PTHREAD_MUTEX_INITIALIZER;
@@ -57,16 +77,7 @@ OliWeb::OliWeb()
     logFileName = "OliWeb.log";
     phpEngine = "/usr/bin/php";
     phpFlags = "-f";
-
     threadIndex = 0;
-    configXml();
-
-    openLogFile();
-}
-
-OliWeb::~OliWeb()
-{
-    log.close();
 }
 
 void OliWeb::openLogFile()
@@ -554,12 +565,12 @@ void OliWeb::writeLog(const string &logMessage, const bool timestamp)
 int OliWeb::configXml()
 {
     string msg = "Opening ";
-    msg += OLIWEB_CONFIG;
+    msg += configFileName;
     writeLog(msg);
     //writeLog("Parsing XML (tinyxml2)");
     //config.Parse(OLIWEB_CONFIG);
     //config.Parse("utf8test.xml");
-    config.LoadFile(OLIWEB_CONFIG);
+    config.LoadFile(configFileName.c_str());
     //writeLog("Errorcode = " + toString(config.ErrorID()));
 
     //  Pick apart the XML for config options...

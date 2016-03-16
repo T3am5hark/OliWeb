@@ -94,17 +94,17 @@ class OliWeb
     public:
 
     OliWeb();
+    OliWeb(string config);
     ~OliWeb();
     int run();
     void threadRequestHandler(InboundRequest *request);
 
     private:
 
+    void InitDefaults();
     int configXml();
     void writeLog(const string &logMessage, const bool timestamp = true);
     void handleInboundRequest();
-    //string parseRequest(string request);
-    //static string extractQueryArgs(string url);
     static bool isCgi(string str);
     static bool isPhp(string str);
     static bool isHtml(string str);
@@ -129,6 +129,7 @@ class OliWeb
     string phpEngine;
     string phpFlags;
     string utilDirectory;
+    string configFileName=OLIWEB_CONFIG;
     LogLevel logLevel;
 
     IvySox ivySox;
