@@ -273,7 +273,7 @@ unsigned short int IvySox::getInboundPortNumber()
 
 int IvySox::bindSocket()
 {
-    // Scope operator "::" is to prevent confusion in some 
+    // Scope operator "::" is to prevent confusion in some
     // systems with std::bind(...)
     std::cout << "ai_addr:    " << addressInfoResults->ai_addr << endl;
     std::cout << "ai_addrlen: " << addressInfoResults->ai_addrlen << endl;
@@ -476,6 +476,11 @@ int IvySox::openServerOnPort(int portNumber)
     socketNumber = socket( AF_INET,
                            SOCK_STREAM,
                            0 );
+
+    // This should allow the socket to be immediately reused...
+    int option = 1;
+    setsockopt(socketNumber, SOL_SOCKET, (SO_REUSEPORT | SO_REUSEADDR),
+               (char*)&option,sizeof(option));
 
     int rval = ::bind(socketNumber,
                       (struct sockaddr *) &sockAddr,

@@ -1,4 +1,4 @@
-cgi-bin/htmlStart.cgi
+$CGI_BIN/htmlStart.cgi
 
 echo '<H2><font face="arial" color="C8A055">'
 echo 'Taking screenshot...<br>'
@@ -12,4 +12,4 @@ echo '<a href="cgiScripts.html">scripts</a><br>'
 echo '<a href="index.html">back to main</a><br>'
 
 echo '</font></H2>'
-cgi-bin/htmlEnd.cgi
+$CGI_BIN/htmlEnd.cgi

@@ -1,9 +1,8 @@
-cgi-bin/htmlStart.cgi
+$CGI_BIN/htmlStart.cgi
 
 echo 'Contents of capture directory:<br><br>'
 
-cd web
-ALLFILES=video/*.*
+ALLFILES=$WEB/video/*.*
 
 for F in $ALLFILES;
 do
@@ -13,6 +12,4 @@ done
 echo '<br><br>'
 echo '<a href="snapshot.cgi">[Take Snapshot]</a>'	
 
-
-#cgi-bin/htmlEnd.cgi
 echo '</html>'

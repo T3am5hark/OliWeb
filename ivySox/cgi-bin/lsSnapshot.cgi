@@ -1,4 +1,4 @@
-cgi-bin/htmlStart.cgi
+$CGI_BIN/htmlStart.cgi
 
 echo '<H2>'
 echo 'Contents of snapshot directory:<br><br>'
@@ -28,5 +28,5 @@ echo '<a href="cgiScripts.html">[Scripts]</a><br>'
 echo '<a href="index.html">[Main]</a><br>'
 
 echo '</H3>'
-cgi-bin/htmlEnd.cgi
+$CGI_BIN/htmlEnd.cgi
 #echo '</html>'

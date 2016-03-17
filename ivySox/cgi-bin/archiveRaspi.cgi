@@ -1,4 +1,4 @@
 DATESTAMP="$(date +%Y-%m-%d_%H_%M_%S)"
-cp web/snapshot/snapshot.jpeg "web/snapshot/$DATESTAMP.jpeg"
+cp $WEB/snapshot/snapshot.jpeg "$WEB/snapshot/$DATESTAMP.jpeg"
 
-cgi-bin/redirect.cgi raspisnap.cgi
+$CGI_BIN/redirect.cgi raspisnap.cgi

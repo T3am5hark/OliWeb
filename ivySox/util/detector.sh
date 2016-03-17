@@ -18,11 +18,9 @@ then
   echo "DETECTED: $LASTPIN -> $PIN [$STAMP]"
   if [ "$PIN" -eq 1 ]
   then
-    '../cgi-bin/birdChatterShort.cgi'
-    #'../cgi-bin/birdChatterLong.cgi'
+    "$CGI_BIN/birdChatterShort.cgi"
   else
-    #'../cgi-bin/birdChatter.cgi'
-    '../cgi-bin/birdChatterShort.cgi'
+    "$CGI_BIN/birdChatterShort.cgi"
   fi
   PIN=$(gpio -g read $detector)
 fi
