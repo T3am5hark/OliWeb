@@ -479,8 +479,13 @@ int IvySox::openServerOnPort(int portNumber)
 
     // This should allow the socket to be immediately reused...
     int option = 1;
+#ifdef SO_REUSEPORT
     setsockopt(socketNumber, SOL_SOCKET, (SO_REUSEPORT | SO_REUSEADDR),
                (char*)&option,sizeof(option));
+#else
+    setsockopt(socketNumber, SOL_SOCKET, SO_REUSEADDR, 
+               (char*)&option,sizeof(option));
+#endif
 
     int rval = ::bind(socketNumber,
                       (struct sockaddr *) &sockAddr,

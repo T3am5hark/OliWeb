@@ -47,6 +47,7 @@ InboundRequest::InboundRequest(int inboundSocketNumber)
 OliWeb::OliWeb()
 {
     InitDefaults();
+    configFileName=OLIWEB_CONFIG;
     configXml();
     openLogFile();
 }

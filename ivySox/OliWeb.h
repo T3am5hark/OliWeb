@@ -129,7 +129,8 @@ class OliWeb
     string phpEngine;
     string phpFlags;
     string utilDirectory;
-    string configFileName=OLIWEB_CONFIG;
+    //string configFileName=OLIWEB_CONFIG;
+    string configFileName;
     LogLevel logLevel;
 
     IvySox ivySox;
