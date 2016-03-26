@@ -248,6 +248,7 @@ void OliWeb::invoke(InboundRequest *request, string cmd,
         setenv("QUERY_STRING", request->queryString.c_str(), 1);
         setenv("REQUEST_METHOD", request->method.c_str(), 1);
         setenv("CGI_BIN", scriptDirectory.c_str(), 1);
+        setenv("WEB",rootFileDirectory.c_str(), 1);
         setenv("WEB_ROOT",rootFileDirectory.c_str(), 1);
         setenv("BODY", request->body.c_str(), 1);
         setenv("UTIL", utilDirectory.c_str(), 1);
