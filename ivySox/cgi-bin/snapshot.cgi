@@ -26,7 +26,7 @@ echo '<a href="steerAndSnap.cgi?position=5&pulses=2" class="btn btn-primary">&lt
 echo '<a href="steerAndSnap.cgi?position=15&pulses=30" class="btn btn-primary">Ctr</a>'
 echo '<a href="steerAndSnap.cgi?position=25&pulses=2" class="btn btn-primary">&gt;</a>'
 echo '<a href="steerAndSnap.cgi?position=25&pulses=5" class="btn btn-primary">&gt;&gt;</a>'
-#echo '<a href="steerAndSnap.cgi?position=25&pulses=50" class="btn btn-primary">Right</a>'
+#echo '<a href=steerAndSnap.cgi?position=25&pulses=50" class="btn btn-primary">Right</a>'
 echo '</div><br><br>'
 
 #echo '<div class="btn-group btn-group-lg" role="group" aria-label="...">'
