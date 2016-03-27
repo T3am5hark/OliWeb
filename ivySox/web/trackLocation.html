@@ -42,7 +42,8 @@
     </div>
 </div>
 <div class="form-group">
-    <label id="TrackingOnId">Tracking: off</label>
+    <label id="TrackingOnId">Tracking: off</label><br>
+    Tag: <input type="text" id="tagId"></input>
 </div>
 <p id="demo"></p>
 <p id="postFile"></p>
@@ -71,11 +72,13 @@ function getLocation() {
     //    });
 }
 
-function logLocation(lat, long){
-    var urlWithArgs = "logLocation.cgi?Lat=" + lat + "&Long=" + long;
-    y.innerHTML = "Logging location...";
+function logLocation(lat, long, timeStamp, tag){
+    var urlWithArgs = "logLocation.cgi?Lat=" + lat + 
+                      "&Long=" + long + "&Time=" + timeStamp.getTime() +
+                      "&Tag=" + tag;
+    var str = "Logging location... ";
     $.get(urlWithArgs, function(data, status) {
-        y.innerHTML+="<br>" + data + "<br>Status: " + status;
+        y.innerHTML = str+ status + "<br>" + data;
     });
 }
 
@@ -83,10 +86,14 @@ function logPosition(position) {
     trackingCount++;
     var str = "Lat:  " + position.coords.latitude +
     "<br>Long: " + position.coords.longitude;
-    str += "<br>" + Date().toString() + "<br>";
-    str += "Collected " + trackingCount + " points.";
+    var date = new Date();
+    //str += "<br>" + date.toString();
+    str += "<br>" + date.toTimeString();
+    str += "<br>Collected " + trackingCount + " points.";
+    var tag = $("#tagId").val();
+    str += "<br>Tag: " + tag;
     x.innerHTML = str;
-    logLocation(position.coords.latitude, position.coords.longitude);
+    logLocation(position.coords.latitude, position.coords.longitude, date, tag);
 }
 
 function setRepeat(){
@@ -96,7 +103,11 @@ function setRepeat(){
         //trackingCount = 0;
         getLocation();
         //timeoutEvent = setInterval(getLocation, 5000);
-        locationChangeEvent = navigator.geolocation.watchPosition(logPosition, errorHandler);
+        var options = { enableHighAccuracy: true, 
+                        timeout: 5000,
+                        maximumAge: 0,
+                        desiredAccuracy: 2 };
+        locationChangeEvent = navigator.geolocation.watchPosition(logPosition, errorHandler, options);
         var btn = document.getElementById("TrackButton");
         btn.className = "btn btn-lg btn-success";
         $( "#TrackingOnId" ).text("Tracking: ON");
