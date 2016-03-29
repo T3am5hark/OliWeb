@@ -5,7 +5,7 @@ TAG="$($UTIL/GetProperty Tag $QUERY_STRING)"
 
 DATESTR="$(date +%Y_%m_%d)"
 
-FILENAME="$WEB/tracker/$TAG.$DATESTR.dat"
+FILENAME="$WEB/tracker/$DATESTR.$TAG.dat"
 
 echo "Lat:    $LAT<br>"
 echo "Long:   $LONG<br>"
