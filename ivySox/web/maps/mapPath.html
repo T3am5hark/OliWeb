@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+      <!-- Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    
+    <style type="text/css">
+        html { height: 100% }
+        body { height: 100%; margin: 0; padding: 0 }
+        #map-canvas { height: 100% }
+    </style>
+    <style type="text/css">
+        textarea {
+            font-size: 10pt;
+            font-family: Monaco;
+        }
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGDSxNEjbRx2J-JOHbAym4ciWEv_njtLs">
+    </script>
+    <script type="text/javascript">
+        function initialize() {
+            var mapOptions = {
+                center: new google.maps.LatLng(33.5, -112),
+                zoom: 10
+            };
+            window.map = new google.maps.Map(document.getElementById("map-canvas"),
+                    mapOptions);
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+        
+    </script>
+</head>
+<body>
+    <div id="map-canvas" style="width:90%;height:50%">
+    </div>
+    <div>
+        <H3>
+        <textarea id="latLongText" readonly="true" cols="38" rows="3" >Press link for map bounds
+        </textarea>
+        <br>
+        <a onclick="getBounds();return false;" href="javascript:void(0);">Get Bounds</a>
+        <!--
+        <a onclick="retrievePosts();return false;" href="">Find Posts</a> |
+        <a href="">Reset</a> |
+        <a onclick="testPath();return false;" href="">Path Test</a>
+        -->
+        <hr />
+        </H3>
+    </div>
+</body>
+<script type="text/javascript">
+    var latLongText=document.getElementById("latLongText");
+    function getBounds() {
+        var bounds=window.map.getBounds();
+        var southWest=bounds.getSouthWest();
+        var northEast=bounds.getNorthEast();
+        var text="SW="+southWest.toString()+"\n";
+        text+="NE="+northEast.toString();
+        $( "#latLongText" ).val(text);
+    }
+</script>
+</html>
