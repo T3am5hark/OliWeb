@@ -48,6 +48,7 @@
 <p id="demo"></p>
 <p id="postFile"></p>
 <img id="RadarId" src="radar.png" width="50" /><br>
+<a href="maps/mapPath.html">Map Paths</a><br>
 <a href="lsToHtml.cgi?dir=tracker&ext=dat">Show Location Logs</a><br>
 </center>
 </H3>
@@ -61,10 +62,15 @@ var trackingCount = 0;
 var locationChangeEvent;
 var timeoutEvent;
 
+var options = { enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 2,
+                desiredAccuracy: 5 };
+
 function getLocation() {
     if (navigator.geolocation) {
-        //y.innerHTML += "Supported.";
-        navigator.geolocation.getCurrentPosition(logPosition, errorHandler, {timeout:4000});
+
+        navigator.geolocation.getCurrentPosition(logPosition, errorHandler, options);
     } else {
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
@@ -102,12 +108,9 @@ function setRepeat(){
     {
         trackingOn = true;
         //trackingCount = 0;
-        getLocation();
+        //getLocation();
         //timeoutEvent = setInterval(getLocation, 5000);
-        var options = { enableHighAccuracy: true, 
-                        timeout: 5000,
-                        maximumAge: 0,
-                        desiredAccuracy: 2 };
+
         locationChangeEvent = navigator.geolocation.watchPosition(logPosition, errorHandler, options);
         var btn = document.getElementById("TrackButton");
         btn.className = "btn btn-lg btn-success";

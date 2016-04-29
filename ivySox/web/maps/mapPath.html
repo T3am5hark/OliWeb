@@ -30,25 +30,27 @@
             window.map = new google.maps.Map(document.getElementById("map-canvas"),
                     mapOptions);
             map=window.map;
-            //loadDatFiles();
+            loadDatFiles();
         }
         google.maps.event.addDomListener(window, 'load', initialize);
         
     </script>
 </head>
 <body>
-    <div id="map-canvas" style="width:90%;height:50%">
+    <div id="map-canvas" style="width:100%;height:60%">
     </div>
     
     <div>
+        <h4>
+            <select id="datFiles" name="Path Files" multiple>
+            </select>
+        </h4>
     <h3>
-    <select id="datFiles" name="Path Files" multiple>
-        
-    </select>
+    <a onclick="display(); return false;" href="javascript:void(0);">Chart |</a>
+    <a onclick="clearAllPaths(); return false" href="javascript:void(0);">Clear |</a>
+    <a onclick="loadDatFiles();return false;" href="javascript:void(0);">Reload</a>
     <br>
-    <a onclick="loadDatFiles();return false;" href="javascript:void(0);">Load Paths |</a>
-    <a onclick="display(); return false;" href="javascript:void(0);">Display</a>
-    
+    <a href="../trackLocation.html">Tracker</a>
     </h3>
     </div>
     
@@ -62,7 +64,11 @@
         </H3>
     </div>
 </body>
+
 <script type="text/javascript">
+    var allPaths = [];
+    var allMarkers = [];
+    
     function getBounds() {
         var bounds=window.map.getBounds();
         var southWest=bounds.getSouthWest();
@@ -78,7 +84,10 @@
         $.get(url, function(data, status) {
             console.log("status="+status.toString());
             var files=data.split("\n");
+            // Flip the order so we get most recent data first in list
+            files.reverse();
             var str="";
+            str += "<option disabled>Select Paths</option>";
             files.forEach( function(file,index) {
                 if (file.length > 4){
                           fileClean=file.trim().replace(" ","\ ");
@@ -97,37 +106,87 @@
         var slct=$("#datFiles");
         var val=slct.val();
         console.log(val);
-        val.forEach( function(path,index) {
-            loadPath(path);
-        });
+        //val.forEach( function(path,index) {
+        //    loadPath(path);
+        //});
+        for (var i = 0; i < val.length; i++){
+            loadPath(val[i]);
+        }
     }
 
     function loadPath(pathFile){
         var url = "../tracker/" + pathFile;
         console.log(url);
-        coords=[];
+        var coords=[];
+        var color=getColor();
+        console.log("1. Color=" + color);
         $.get(url, function(data, status){
             console.log("status="+status.toString());
             //console.log(data);
             var lines=data.split("\n");
             lines.forEach( function(line, index) {
                 var columns=line.split(",");
-                if (columns.length==3){
-                    var latLng = {lat: Number(columns[1]), lng: Number(columns[2]) };
-                    coords.push( latLng );
-                    //console.log(JSON.stringify(latLng));
-                }
+                if (columns.length<3) return;
+                var latLng = {lat: Number(columns[1]), lng: Number(columns[2]) };
+                coords.push( latLng );
+                //console.log(JSON.stringify(latLng));
             });
-            color=getColor();
+            console.log("2. Color=" + color);
+              
             var path = new google.maps.Polyline({
                                     path: coords,
                                     geodesic: true,
                                     strokeColor: color,
-                                    strokeOpacity: 1.0,
-                                    strokeWeight: 2
+                                    strokeOpacity: 0.75,
+                                    strokeWeight: 4
                                                 });
             path.setMap(map);
+              
+            var img1 = new google.maps.MarkerImage(
+                "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=|22AA11",
+                                                   new google.maps.Size(21, 34),
+                                                   new google.maps.Point(0,0),
+                                                   new google.maps.Point(10, 34));
+            var img2 = new google.maps.MarkerImage(
+                "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=|BB2200",
+                                                   new google.maps.Size(21, 34),
+                                                   new google.maps.Point(0,0),
+                                                   new google.maps.Point(10, 34));
+
+            marker1 = new google.maps.Marker({
+                            map: map,
+                            draggable: false,
+                            animation: google.maps.Animation.DROP,
+                            icon: img1,
+                            position: coords[0]
+                                              });
+              
+            marker2 = new google.maps.Marker({
+                            map: map,
+                            draggable: false,
+                            animation: google.maps.Animation.DROP,
+                            icon: img2,
+                            position: coords[coords.length-1]
+                                               });
+            allPaths.push(path);
+            allMarkers.push(marker1);
+            allMarkers.push(marker2);
         });
+    }
+
+    function clearAllPaths(){
+        if (allPaths.length == 0) return;
+        
+        allPaths.forEach( function(path,index){
+            path.path=null;
+            path.setMap(null);
+        });
+        allMarkers.forEach( function(marker,index){
+            marker.setMap(null);
+        });
+        allPaths=[];
+        allMarkers=[];
+        idx=0;
     }
 
     function getColor(){
@@ -137,13 +196,13 @@
 
 
     var colorPalette = [
-    '#339966',
-    '#333399',
-    '#336699',
-    '#993333',
-    '#999933',
     '#663399',
+    '#111199',
+    '#993311',
+    '#339933',
+    '#669911',
     '#993399',
+    '#999933',
     '#996633'
                         ];
     var idx=0;
