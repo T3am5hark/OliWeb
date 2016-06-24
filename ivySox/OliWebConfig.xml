@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <OliWebConfig>
     <ConfigurationSettings>
-        <PortNumber value="8077"></PortNumber>
-        <RootFileDirectory value="web"></RootFileDirectory>
-        <DefaultFileName value="index.html"></DefaultFileName>
-        <FileNotFoundPage value="oops404.html"></FileNotFoundPage>
-        <ScriptDirectory value="cgi-bin"></ScriptDirectory>
-        <LogFile value="OliWeb.log"></LogFile>
-        <PhpEngine value="/usr/bin/php"/>
-        <PhpFlags value="-f"/>
+        <PortNumber value="8077" />
+        <RootFileDirectory value="web" />
+        <DefaultFileName value="index.html" />
+        <FileNotFoundPage value="oops404.html" />
+        <ScriptDirectory value="cgi-bin" />
+        <LogFile value="OliWeb.log" />
+        <PhpEngine value="/usr/bin/php" />
+        <PhpFlags value="-f" />
+        <PythonEngine value="/usr/bin/python" />
+        <PythonFlags value="" />
         <UtilDirectory value="util" />
+        <LogLevel value="medium" />
     </ConfigurationSettings>
 </OliWebConfig>

@@ -1,4 +1,3 @@
-
 /*
 
 [OliWeb and IvySox are provided under the MIT software license]
@@ -23,11 +22,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-
 */
 
 #ifndef OLIWEB_INCLUDE
 #define OLIWEB_INCLUDE
+
+#define OLIWEB_VERSION "2.0.1"
 
 #include <string>
 #include <iostream>
@@ -49,7 +49,7 @@ class InboundRequest
 {
     public:
 
-    InboundRequest(int socketNumber);
+    InboundRequest(const int socketNumber);
     InboundRequest();
     void parse(string defaultFilename = "/index.html");
 
@@ -73,20 +73,18 @@ class InboundRequest
 
 };
 
-
-typedef enum LogLevel
+enum LogLevel
 {
     none = 0,
-    minimal = 1,
-    commands = 2,
-    full = 3
-} LogLevel;
+    error = 1,
+    low = 2,
+    medium = 3,
+    high = 4
+};
 
 class OliWebConfig
 {
     public:
-
-
 };
 
 class OliWeb
@@ -94,7 +92,7 @@ class OliWeb
     public:
 
     OliWeb();
-    OliWeb(string config);
+    OliWeb(const string &config);
     ~OliWeb();
     int run();
     void threadRequestHandler(InboundRequest *request);
@@ -103,16 +101,21 @@ class OliWeb
 
     void InitDefaults();
     int configXml();
-    void writeLog(const string &logMessage, const bool timestamp = true);
+    void writeLog(const string &logMessage, const bool timestamp = true,
+                  const LogLevel msgLogLevel=medium);
     void handleInboundRequest();
-    static bool isCgi(string str);
-    static bool isPhp(string str);
-    static bool isHtml(string str);
+    static bool isCgi(const string &str);
+    static bool isPhp(const string &str);
+    static bool isPython(const string &str);
+    static bool isHtml(const string &str);
+    void parseLogLevelString(const string &logLevelString);
     void invokeCgi(InboundRequest *request);
     void invokePhp(InboundRequest *request);
-    void invoke(InboundRequest *request, string cmd, string flags, string target);
+    void invokePython(InboundRequest *request);
+    void invoke(InboundRequest *request, const string &cmd,
+                const string &flags, const string &target);
     int fetchFile(InboundRequest *request);
-    int sendContentType(InboundRequest *request, string contentType);
+    int sendContentType(InboundRequest *request, const string &contentType);
     int sendStatusOk(InboundRequest *request);
     int sendStatusNotFound(InboundRequest *request);
     void getScriptFilename(InboundRequest *request);
@@ -120,6 +123,7 @@ class OliWeb
     void openLogFile();
     bool logIsOpen();
 
+    // Configuration - TODO: Extract to config object
     int portNumber;
     string rootFileDirectory;
     string defaultFileName;
@@ -129,9 +133,10 @@ class OliWeb
     string phpEngine;
     string phpFlags;
     string utilDirectory;
-    //string configFileName=OLIWEB_CONFIG;
     string configFileName;
     LogLevel logLevel;
+    string pythonEngine;
+    string pythonFlags;
 
     IvySox ivySox;
     XMLDocument config;
@@ -157,8 +162,5 @@ string lowerCase(string input);
 void *threadEntryPoint(void *requestVoid);
 
 template <class myType> string toString(myType item);
-
-
-
 
 #endif
