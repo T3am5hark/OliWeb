@@ -27,7 +27,9 @@ SOFTWARE.
 
 int main (int argc, char *argv[])
 {
-    OliWeb server;
+    string configFile = OLIWEB_CONFIG;
+    if (argc > 1) configFile = argv[1];
+    OliWeb server(configFile);
     int result = server.run();
     return result;
 }

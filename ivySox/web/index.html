@@ -5,7 +5,8 @@
 <head>
   <!-- Bootstrap -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <!-- No zoom 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   -->
@@ -36,46 +37,123 @@ Raspberry Pi!!!
 </h2>
 
 <h3>
-<img src="BigMap.png" class="img-responsive" /><br>
+<img src="BigMap.png" class="img-responsive" width="320"/>
 <!--
 <a href="motion/recent_motion.jpg">
-<img src="motion/recent_motion.jpg" class="img-responsive" />
+<img src="motion/recent_motion.jpg" class="img-responsive"/>
 </a><br>
 -->
 
 </h3>
 
-<h2>
 
-Scripts:<br>
-<a href="cgiScripts.html">CGI Scripts</a><br>
-<a href="gpio.html">GPIO Controls</a><br>
+<h4>
 
-<br>
+<div class="container">
+    <h2>Things:</h2>
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse1">MotoCam</a>
+                </h2>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <a href="snapshot.cgi">Camera Controls</a><br>
+                    <a href="raspisnap.cgi">RaspiSnap!</a><br>
+                    <a href="snapshotMulti.cgi">MultiSnapshot!</a><br>
+                    <a href="lsSnapshot.cgi">Show Snapshot Directory</a><br>
+                </div>
+            </div>
+            
+            <div class="panel-heading">
+                <h2 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse2">Location Tracking</a>
+                </h2>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <a href="trackLocation.html">Location Tracker</a><br>
+                    <a href="lsToHtml.cgi?dir=tracker&ext=dat">Show Location Logs</a><br>
+                    <a href="maps/mapPath.html">Tracker Paths</a>
+                </div>
+            </div>
+            
+            <div class="panel-heading">
+                <h2 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse5">CGI Scripts</a>
+                </h2>
+            </div>
+            <div id="collapse5" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <a href="lsCurrent.cgi">Show current directory</a><br>
+                    <a href="lsWeb.cgi">Show web root directory</a><br>
+                    <a href="lsBin.cgi">Show bin directory</a><br>
+                    <a href="ifConfig.cgi">ifConfig</a><br>
+                    <a href="ShowWebLog.cgi">Show web log (short)</a><br>
+                    <a href="ShowWebLog.cgi?N=1000">Show web log (1000)</a><br>
+                    <a href="ShowConfigXML.cgi">Show OliWeb config</a><br>
+                    <a href="psAll.cgi">Show all running processes</a><br>
+                    <a href="who.cgi">Show all system users</a><br>
+                    <a href="lsVideo.cgi">Show capture directory</a><br>
+                    <a href="lsMotion.cgi">Show motion directory</a><br>
+                    <a href="lsToHtml.cgi?dir=songs&ext=mp3">Show Music Files</a><br>
+                    <a href="/audio/uke.m4a" download>Ukelele</a><br>
+                    <a href="cgiScripts.html">CGI Scripts</a><br>
+                </div>
+            </div>
+            
+            <div class="panel-heading">
+                <h2 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse6">GPIO</a>
+                </h2>
+            </div>
+            <div id="collapse6" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <a href="flip.cgi?pin=17">Flip pin 17</a><br>
+                    <a href="flip.cgi?pin=22">Flip pin 22</a><br>
+                    <a href="flip.cgi?pin=23">Flip pin 23</a><br>
+                    <a href="pinState.cgi">Pin States</a><br>
+                    <a href="blink.cgi">BlinkTest!</a><br>
+                    <a href="birdChatter.cgi">Bird Chatter</a><br>
+                    <a href="birdChatterLong.cgi">Long Chatter</a><br>
+                    <a href="birdChatterShort.cgi">Short Chatter</a><br>
+                    <a href="gpio.html">GPIO Controls</a><br>
+                </div>
+            </div>
+            
+            <div class="panel-heading">
+                <h2 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse3">Miscellaneous</a>
+                </h2>
+            </div>
+            <div id="collapse3" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <a href="TeensySerial.html">Teensy Serial</a><br>
+                    <a href="abap.jpg">ABAP!!!</a><br>
+                </div>
+            </div>
+            
+            <div class="panel-heading">
+                <h2 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse4">Testing</a>
+                </h2>
+            </div>
+            <div id="collapse4" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <a href="input.html">Input tester</a><br>
+                    <a href="formInput.html">Form Input Tester</a><br>
+                    <a href="sample.php">Test PHP execution</a><br>
+                    <a href="test.cgi?parameter1=true&parameter2=12345&parameter3">Test CGI</a><br>
+                    <a href="ThisLinkDoesNot.Exist">Test 404 FNF</a><br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-Testing:<br>
-<a href="TeensySerial.html">Teensy Serial</a><br>
-<a href="input.html">Input tester</a><br>
-<a href="formInput.html">Form Input Tester</a><br>
-<a href="sample.php">Test PHP execution</a><br>
-<a href="ThisLinkDoesNot.Exist">Test 404 FNF</a><br>
-<a href="TeensySerial.html">Teensy Serial</a><br>
-
-<br>
-<a href="abap.jpg">ABAP!!!</a><br>
-
-
-
-<!--
-<a href="ShowWebLog.cgi">Show OliWeb Logs</a><br>
-<a href="ShowConfigXML.cgi">Show OliWeb Config</a><br>
-<a href="http://beej.us/guide/bgnet/output/print/bgnet_USLetter.pdf">Beej's Guide to Network Programming</a><br>
-<a href="cgiScripts.html">CGI Scripts</a><br>
-<a href="gpio.html">GPIO Controls</a><br>
-<a href="video/out.avi">Video Capture</a><br>
--->
-
-</h2>
+</h4>
 
 <hr>
 <h4>
@@ -89,11 +167,6 @@ Raspberry Pi hosting <a href="https://github.com/m2ware/OliWeb">OliWeb 1.0.0</a>
 
 </font>
 </p>
-
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script scr="https://code.jquery.com/jquery.js"></script>
-  <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script scr="js/bootstrap.min.js"></script>
 
 </body>
 </html>

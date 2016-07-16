@@ -1,14 +1,14 @@
 
-cgi-bin/htmlStart.cgi
+$CGI_BIN/htmlStart.cgi
 echo '<H2>'
 echo 'Running GPIO blink test<br>'
 echo '.......................'
 echo '</H2>'
-cgi-bin/htmlEnd.cgi
+$CGI_BIN/htmlEnd.cgi
 
 
-util/init
-/bin/bash util/blinktest &
+$UTIL/init
+/bin/bash $UTIL/blinktest &
 
 
 

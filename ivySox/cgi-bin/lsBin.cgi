@@ -1,3 +1,2 @@
-echo "ShowWebLog.cgi invoked:"
-#ls -alt cgi-bin
+echo "Contents of cgi-bin directory:"
 ls -alt $CGI_BIN

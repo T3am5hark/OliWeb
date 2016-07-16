@@ -3,7 +3,7 @@ MOD100=0
 for COUNTER in {1..256}
 do
 
-util/flip 17
+$UTIL/flip 17
 
 if [ $MOD10 -eq 4 ]
 then

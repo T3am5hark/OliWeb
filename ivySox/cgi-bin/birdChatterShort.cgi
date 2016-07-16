@@ -6,4 +6,4 @@ gpio_pwm 17 50000 2 50
 sleep 0.035
 gpio_pwm 17 35000 13 50
 
-util/redirect.sh gpio.html
+$UTIL/redirect.sh gpio.html

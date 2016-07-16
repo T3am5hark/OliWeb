@@ -1,2 +1,1 @@
-#cat htmlHeader.txt
-cat bootstrapHeader.txt
+cat $CGI_BIN/bootstrapHeader.txt

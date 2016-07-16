@@ -1,2 +1,1 @@
-#cat htmlFooter.txt
-cat bootstrapFooter.txt
+cat $CGI_BIN/bootstrapFooter.txt

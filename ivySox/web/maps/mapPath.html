@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+      <!-- Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    
+    <style type="text/css">
+        html { height: 100% }
+        body { height: 100%; margin: 0; padding: 0 }
+        #map-canvas { height: 100% }
+    </style>
+    <style type="text/css">
+        textarea {
+            font-size: 10pt;
+            font-family: Monaco;
+        }
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGDSxNEjbRx2J-JOHbAym4ciWEv_njtLs">
+    </script>
+    <script type="text/javascript">
+        var map=null;
+        function initialize() {
+            var mapOptions = {
+                center: new google.maps.LatLng(33.5, -112),
+                zoom: 10
+            };
+            window.map = new google.maps.Map(document.getElementById("map-canvas"),
+                    mapOptions);
+            map=window.map;
+            loadDatFiles();
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+        
+    </script>
+</head>
+<body>
+    <div id="map-canvas" style="width:100%;height:60%">
+    </div>
+    
+    <div>
+        <h4>
+            <select id="datFiles" name="Path Files" multiple>
+            </select>
+        </h4>
+    <h3>
+    <a onclick="display(); return false;" href="javascript:void(0);">Chart |</a>
+    <a onclick="clearAllPaths(); return false" href="javascript:void(0);">Clear |</a>
+    <a onclick="loadDatFiles();return false;" href="javascript:void(0);">Reload</a>
+    <br>
+    <a href="../trackLocation.html">Tracker</a>
+    </h3>
+    </div>
+    
+    <div>
+        <H3>
+        <textarea id="latLongText" readonly="true" cols="38" rows="3" >Press link for map bounds
+        </textarea>
+        <br>
+        <a onclick="getBounds();return false;" href="javascript:void(0);">Get Bounds</a>
+        <hr />
+        </H3>
+    </div>
+</body>
+
+<script type="text/javascript">
+    var allPaths = [];
+    var allMarkers = [];
+    
+    function getBounds() {
+        var bounds=window.map.getBounds();
+        var southWest=bounds.getSouthWest();
+        var northEast=bounds.getNorthEast();
+        var text="SW="+southWest.toString()+"\n";
+        text+="NE="+northEast.toString();
+        $("#latLongText").val(text);
+    }
+
+    function loadDatFiles(){
+        var url = "../lsToHtml.cgi?dir=tracker&ext=dat&noHtml=1";
+        console.log(url);
+        $.get(url, function(data, status) {
+            console.log("status="+status.toString());
+            var files=data.split("\n");
+            // Flip the order so we get most recent data first in list
+            files.reverse();
+            var str="";
+            str += "<option disabled>Select Paths</option>";
+            files.forEach( function(file,index) {
+                if (file.length > 4){
+                          fileClean=file.trim().replace(" ","\ ");
+                    console.log(file);
+                          //str+="<option value=&quot;"+ file.trim() +
+                          //"&quot; >" + file.trim() + "</option>";
+                          str+="<option value="+ fileClean +
+                          " >" + fileClean + "</option>";
+                }
+            });
+          $("#datFiles").html(str);
+        });
+    }
+
+    function display(){
+        var slct=$("#datFiles");
+        var val=slct.val();
+        console.log(val);
+        //val.forEach( function(path,index) {
+        //    loadPath(path);
+        //});
+        for (var i = 0; i < val.length; i++){
+            loadPath(val[i]);
+        }
+    }
+
+    function loadPath(pathFile){
+        var url = "../tracker/" + pathFile;
+        console.log(url);
+        var coords=[];
+        var color=getColor();
+        console.log("1. Color=" + color);
+        $.get(url, function(data, status){
+            console.log("status="+status.toString());
+            //console.log(data);
+            var lines=data.split("\n");
+            lines.forEach( function(line, index) {
+                var columns=line.split(",");
+                if (columns.length<3) return;
+                var latLng = {lat: Number(columns[1]), lng: Number(columns[2]) };
+                coords.push( latLng );
+                //console.log(JSON.stringify(latLng));
+            });
+            console.log("2. Color=" + color);
+              
+            var path = new google.maps.Polyline({
+                                    path: coords,
+                                    geodesic: true,
+                                    strokeColor: color,
+                                    strokeOpacity: 0.75,
+                                    strokeWeight: 4
+                                                });
+            path.setMap(map);
+              
+            var img1 = new google.maps.MarkerImage(
+                "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=|22AA11",
+                                                   new google.maps.Size(21, 34),
+                                                   new google.maps.Point(0,0),
+                                                   new google.maps.Point(10, 34));
+            var img2 = new google.maps.MarkerImage(
+                "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=|BB2200",
+                                                   new google.maps.Size(21, 34),
+                                                   new google.maps.Point(0,0),
+                                                   new google.maps.Point(10, 34));
+
+            marker1 = new google.maps.Marker({
+                            map: map,
+                            draggable: false,
+                            animation: google.maps.Animation.DROP,
+                            icon: img1,
+                            position: coords[0]
+                                              });
+              
+            marker2 = new google.maps.Marker({
+                            map: map,
+                            draggable: false,
+                            animation: google.maps.Animation.DROP,
+                            icon: img2,
+                            position: coords[coords.length-1]
+                                               });
+            allPaths.push(path);
+            allMarkers.push(marker1);
+            allMarkers.push(marker2);
+        });
+    }
+
+    function clearAllPaths(){
+        if (allPaths.length == 0) return;
+        
+        allPaths.forEach( function(path,index){
+            path.path=null;
+            path.setMap(null);
+        });
+        allMarkers.forEach( function(marker,index){
+            marker.setMap(null);
+        });
+        allPaths=[];
+        allMarkers=[];
+        idx=0;
+    }
+
+    function getColor(){
+        if (++idx == colorPalette.length) idx=0;
+        return colorPalette[idx];
+    }
+
+
+    var colorPalette = [
+    '#663399',
+    '#111199',
+    '#993311',
+    '#339933',
+    '#669911',
+    '#993399',
+    '#999933',
+    '#996633'
+                        ];
+    var idx=0;
+</script>
+</html>

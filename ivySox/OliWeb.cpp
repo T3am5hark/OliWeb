@@ -39,12 +39,33 @@ InboundRequest::InboundRequest()
 {
 }
 
-InboundRequest::InboundRequest(int inboundSocketNumber)
+InboundRequest::InboundRequest(const int inboundSocketNumber)
 {
     socketNumber = inboundSocketNumber;
 }
 
 OliWeb::OliWeb()
+{
+    InitDefaults();
+    configFileName=OLIWEB_CONFIG;
+    configXml();
+    openLogFile();
+}
+
+OliWeb::OliWeb(const string &config)
+{
+    InitDefaults();
+    configFileName=config;
+    configXml();
+    openLogFile();
+}
+
+OliWeb::~OliWeb()
+{
+    log.close();
+}
+
+void OliWeb::InitDefaults()
 {
     // Initialize with default settings
     logMutex = PTHREAD_MUTEX_INITIALIZER;
@@ -57,26 +78,21 @@ OliWeb::OliWeb()
     logFileName = "OliWeb.log";
     phpEngine = "/usr/bin/php";
     phpFlags = "-f";
-
+    pythonEngine = "/usr/bin/python";
+    pythonFlags = "";
     threadIndex = 0;
-    configXml();
-
-    openLogFile();
-}
-
-OliWeb::~OliWeb()
-{
-    log.close();
+    logLevel = medium;
 }
 
 void OliWeb::openLogFile()
 {
     // Open Log File
+    string OliWebVersion = OLIWEB_VERSION;
     log.open(logFileName.c_str(), ios::app );
-    writeLog("******************",false);
-    writeLog("** OliWeb 0.9.1 **",false);
-    writeLog("******************",false);
-    writeLog("Starting OliWeb");
+    writeLog("******************",false, low);
+    writeLog("** OliWeb " + OliWebVersion + " **",false, low);
+    writeLog("******************",false, low);
+    writeLog("Starting OliWeb", true, low);
 }
 
 bool OliWeb::logIsOpen()
@@ -88,10 +104,10 @@ int OliWeb::run()
 {
     pthread_t thread;
     // Open the designated port
-    writeLog("Opening port " + toString(portNumber) );
+    writeLog("Opening port " + toString(portNumber), true, low );
     ivySox.openServerOnPort(portNumber);
     // Listen on port
-    writeLog("Listening on port " + toString(portNumber) + "...");
+    writeLog("Listening on port " + toString(portNumber) + "...", true, low);
     if (ivySox.listenToPort() < 0)
     {
         perror("Listen: ");
@@ -102,8 +118,7 @@ int OliWeb::run()
     while (1)
     {
         // Listen for requests
-        writeLog("Waiting for inbound request.");
-        writeLog("",false);
+        writeLog("Waiting for inbound request.", true, high);
         handleInboundRequest();
     }
 }
@@ -114,7 +129,7 @@ int OliWeb::fetchFile(InboundRequest *request)
 
     pthread_mutex_lock(&ivySoxMutex);
 
-    writeLog("Fetching " + requestedFile);
+    writeLog("Fetching " + requestedFile, true, medium);
 
     // Check to see if requested file exists
     ifstream reqFileStream(requestedFile.c_str());
@@ -125,7 +140,7 @@ int OliWeb::fetchFile(InboundRequest *request)
     } else {
         // Finally, drop a 404
         sendStatusNotFound(request);
-        writeLog("File not found, sending 404");
+        writeLog("File not found, sending 404", true, low);
         requestedFile = rootFileDirectory + "/" + fileNotFoundPage;
     }
 
@@ -135,9 +150,9 @@ int OliWeb::fetchFile(InboundRequest *request)
     {
         //writeLog("Sending " + requestedFile, false);
         bytesSent = (request->inbound).sendFile(requestedFile);
-        writeLog("Sent " + toString(bytesSent) + " bytes.");
+        writeLog("Sent " + toString(bytesSent) + " bytes.", true, medium);
     } else {
-        writeLog("Error parsing for file name.");
+        writeLog("Error parsing for file name.", true, low);
     }
 
     pthread_mutex_unlock(&ivySoxMutex);
@@ -182,7 +197,6 @@ void OliWeb::getArgumentList(InboundRequest *request)
                 anArg = request->requestedFile.substr(a,b-a-1);
             }
             request->scriptArguments += " --" + anArg;
-            //writeLog(anArg);
         }
     }
 }
@@ -203,27 +217,30 @@ void OliWeb::invokePhp(InboundRequest *request)
 {
     getScriptFilename(request);
     string target = rootFileDirectory + request->scriptFilename;
-    //string flags = "-f";
-    //string cmd = "/usr/bin/php";
-    string flags = phpFlags;
-    string cmd = phpEngine;
-    invoke(request, cmd, flags, target);
+    invoke(request, phpEngine, phpFlags, target);
 }
 
-void OliWeb::invoke(InboundRequest *request, string cmd,
-                    string flags, string target)
+void OliWeb::invokePython(InboundRequest *request)
+{
+    getScriptFilename(request);
+    string target = scriptDirectory + request->scriptFilename;
+    invoke(request, pythonEngine, pythonFlags, target);
+}
+
+void OliWeb::invoke(InboundRequest *request, const string &cmd,
+                    const string &flags, const string &target)
 {
     string outputFilename = "scriptOutput." + toString(request->socketNumber);
 
-    writeLog("Invoking: '" + cmd + " " + flags + "'.");
-    writeLog("Target:   '" + target + "'");
+    writeLog("Invoking: '" + cmd + " " + flags + "'.", true, medium);
+    writeLog("Target:   '" + target + "'", true, medium);
     //int returnValue = system(cmd.c_str());
     pid_t processId = fork();
     int returnValue = 0;
     if (processId < 0)
     {
         perror("Fork");
-        writeLog("Could not fork!!");
+        writeLog("Could not fork!!", true, error);
         return;
     } else if (processId > 0)
     {
@@ -236,6 +253,7 @@ void OliWeb::invoke(InboundRequest *request, string cmd,
         setenv("QUERY_STRING", request->queryString.c_str(), 1);
         setenv("REQUEST_METHOD", request->method.c_str(), 1);
         setenv("CGI_BIN", scriptDirectory.c_str(), 1);
+        setenv("WEB",rootFileDirectory.c_str(), 1);
         setenv("WEB_ROOT",rootFileDirectory.c_str(), 1);
         setenv("BODY", request->body.c_str(), 1);
         setenv("UTIL", utilDirectory.c_str(), 1);
@@ -246,25 +264,25 @@ void OliWeb::invoke(InboundRequest *request, string cmd,
         int savedStdOut = dup(STDOUT_FILENO);
         dup2( fileDescriptor, STDOUT_FILENO );
         close(fileDescriptor);
-        //returnValue = execl(cmd.c_str(), cmd.c_str(), (char *) 0);
-        //returnValue = execl("/bin/sh", "/bin/sh", "-c", cmd.c_str(),
-        //                    (char *) 0);
-        returnValue = execl(cmd.c_str(), cmd.c_str(), flags.c_str(),
-                            target.c_str(),
-                            (char *) 0);
+        if (flags.empty())
+        {
+            returnValue = execl(cmd.c_str(), cmd.c_str(), target.c_str(), (char *)0);
+        } else {
+            returnValue = execl(cmd.c_str(), cmd.c_str(), flags.c_str(),
+                                target.c_str(), (char *) 0);
+        }
         if (returnValue)
         {
             int err = errno;
-            writeLog("Errno = " + toString(err) );
+            writeLog("Errno = " + toString(err), false, error );
         }
 
         dup2( savedStdOut, STDOUT_FILENO );
-        writeLog("CGI return value = " + toString(returnValue),false);
+        writeLog("CGI return value = " + toString(returnValue),false, medium);
         _exit(0);
     }
 
     // Parent process picks up here post execution of CGI.
-    // writeLog("CGI return value = " + toString(returnValue));
 
     if (returnValue != 0)
     {
@@ -275,13 +293,13 @@ void OliWeb::invoke(InboundRequest *request, string cmd,
     {
         request->requestedFile=outputFilename;
         fetchFile(request);
-        cmd = "rm " + outputFilename;
-        returnValue = system(cmd.c_str());
-        if (returnValue != 0) writeLog("Error removing temp file " + outputFilename);
+        string cleanCommand = "rm " + outputFilename;
+        returnValue = system(cleanCommand.c_str());
+        if (returnValue != 0) writeLog("Error removing temp file " + outputFilename, true, error);
     }
 }
 
-bool OliWeb::isCgi(string str)
+bool OliWeb::isCgi(const string &str)
 {
     // Look for supported CGI script extensions
     // Consider adding an extensible list in XML...
@@ -292,7 +310,7 @@ bool OliWeb::isCgi(string str)
 
 }
 
-bool OliWeb::isPhp(string str)
+bool OliWeb::isPhp(const string &str)
 {
     if (str.find(".PHP") != string::npos ||
         str.find(".php") != string::npos)
@@ -300,7 +318,15 @@ bool OliWeb::isPhp(string str)
     return false;
 }
 
-bool OliWeb::isHtml(string str)
+bool OliWeb::isPython(const string &str)
+{
+    if (str.find(".PY") != string::npos ||
+        str.find(".py") != string::npos)
+        return true;
+    return false;
+}
+
+bool OliWeb::isHtml(const string &str)
 {
     if (str.find(".html") != string::npos ||
         str.find(".htm") != string::npos ||
@@ -339,9 +365,7 @@ void *threadEntryPoint(void *requestVoid)
     InboundRequest *request = (InboundRequest *) requestVoid;
     OliWeb *oliWeb = (OliWeb *)request->oliWebPtr;
     oliWeb->threadRequestHandler(request);
-    cout << "Deleteding request handler!!" << endl;
     delete request;
-    cout << "EXITING THREAD!!" << endl;
     pthread_exit(NULL);
 }
 
@@ -350,27 +374,29 @@ void OliWeb::threadRequestHandler(InboundRequest *request)
 {
     //IvySox *ivy = &ivySox;
     //pthread_mutex_lock(&ivySoxMutex);
-    writeLog("Received inbound request from " + request->inbound.getIpAddress() );
+    writeLog("Received inbound request from " + request->inbound.getIpAddress(), true, low );
     //writeLog("Socket numbr = " + toString(request->socketNumber));
     request->receivedBytes = request->inbound.receive(request->inboundBuffer, INBOUND_BUFFER_SIZE);
     request->requestString = ivySox.messageToString(request->inboundBuffer, request->receivedBytes);
-    writeLog(request->requestString, false);
-    writeLog("(" + toString(request->receivedBytes) + " bytes)",false);
+    writeLog(request->requestString, false, high);
+    writeLog("(" + toString(request->receivedBytes) + " bytes)",false, medium);
     // Parse the request string to get the file or script being requested
     // request->requestedFile = parseRequest(request->requestString);
     // request->queryString = extractQueryArgs(request->requestedFile);
     request->parse(defaultFileName);
 
-    writeLog("Requested File = [" + request->requestedFile + "]",false);
+    writeLog("Requested File = [" + request->requestedFile + "]",false, medium);
     if (isCgi(request->requestedFile))
     {
-        //writeLog("Request type = CGI script");
         invokeCgi(request);
     }
     else if (isPhp(request->requestedFile))
     {
-        //writeLog("Request type = PHP script");
         invokePhp(request);
+    }
+    else if (isPython(request->requestedFile))
+    {
+        invokePython(request);
     }
     else {
         request->requestedFile = rootFileDirectory + request->requestedFile;
@@ -397,14 +423,13 @@ int OliWeb::sendStatusNotFound(InboundRequest *request)
     return bytesSent;
 }
 
-int OliWeb::sendContentType(InboundRequest *request, string contentType)
+int OliWeb::sendContentType(InboundRequest *request, const string &contentType)
 {
     int bytesSent = -1;
     string contentTypeString = "Content-Type: ";
     contentTypeString+=contentType + "\n\n";
 
     pthread_mutex_lock(&ivySoxMutex);
-    //bytesSent = request->inbound.sendMessage("HTTP/1.x 200 OK\n");
     bytesSent = request->inbound.sendMessage("HTTP/1.1 200 OK\r\n");
     //bytesSent += request->inbound.sendMessage("Connection: close\r\n");
     //bytesSent += request->inbound.sendMessage("Content-Type: text/html; charset=UTF-8\r\n");
@@ -515,14 +540,19 @@ string upperCase(string input)
 string lowerCase(string input)
 {
     for (string::iterator it = input.begin(); it != input.end(); ++ it)
-      *it = toupper(*it);
+      *it = tolower(*it);
     return input;
 }
 
-void OliWeb::writeLog(const string &logMessage, const bool timestamp)
+void OliWeb::writeLog(const string &logMessage, const bool timestamp,
+                      const LogLevel msgLogLevel)
 {
+    // Log level enforcement from configuration
+    if (msgLogLevel > logLevel) return;
+
     // Thread safety
     //pthread_mutex_lock(&logMutex);
+
     //  Time stamp, add string, write to log.
     ostringstream message("");
 
@@ -554,19 +584,15 @@ void OliWeb::writeLog(const string &logMessage, const bool timestamp)
 int OliWeb::configXml()
 {
     string msg = "Opening ";
-    msg += OLIWEB_CONFIG;
+    msg += configFileName;
     writeLog(msg);
-    //writeLog("Parsing XML (tinyxml2)");
-    //config.Parse(OLIWEB_CONFIG);
-    //config.Parse("utf8test.xml");
-    config.LoadFile(OLIWEB_CONFIG);
-    //writeLog("Errorcode = " + toString(config.ErrorID()));
+    config.LoadFile(configFileName.c_str());
 
     //  Pick apart the XML for config options...
     XMLElement *root = config.RootElement();
     if ( root == NULL )
     {
-        writeLog("Error parsing file - no root element found.");
+        writeLog("Error parsing file - no root element found.", true, error);
         return -1;
     }
 
@@ -574,7 +600,7 @@ int OliWeb::configXml()
     XMLElement *parserElement = root->FirstChildElement("ConfigurationSettings");
     if (parserElement != NULL)
     {
-        writeLog("Reading configuration parameters",false);
+        writeLog("Reading configuration parameters",false, medium);
         XMLElement *configElement = parserElement->FirstChildElement();
 
         while (configElement != NULL)
@@ -582,7 +608,7 @@ int OliWeb::configXml()
             string settingName = configElement->Name();
             string value = configElement->Attribute("value");
 
-            writeLog(settingName + " = " + value,false);
+            writeLog(settingName + " = " + value,false, low);
 
             if ( settingName == "PortNumber")
                     portNumber = configElement->IntAttribute("value");
@@ -600,12 +626,31 @@ int OliWeb::configXml()
                     phpEngine = value;
             else if ( settingName == "PhpFlags")
                     phpFlags = value;
+            else if ( settingName == "PythonEngine")
+                    pythonEngine = value;
+            else if ( settingName == "PythonFlags")
+                    pythonFlags = value;
             else if ( settingName == "UtilDirectory")
                     utilDirectory = value;
+            else if ( settingName == "LogLevel")
+                    parseLogLevelString(value);
             else    writeLog("Setting not recognized!!");
 
             configElement = configElement->NextSiblingElement();
         }
     }
     return 0; // Success
+}
+
+void OliWeb::parseLogLevelString(const string &logLevelString)
+{
+    const string logLevelUpper = upperCase(logLevelString);
+
+    if (logLevelUpper=="NONE") logLevel = none;
+    else if (logLevelUpper=="ERROR") logLevel = error;
+    else if (logLevelUpper=="LOW") logLevel = low;
+    else if (logLevelUpper=="MEDIUM") logLevel = medium;
+    else if (logLevelUpper=="HIGH") logLevel = high;
+
+    std::cout << "LogLevel = " << logLevel << "\n";
 }

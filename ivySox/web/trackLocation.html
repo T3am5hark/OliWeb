@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery include -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js">
+  </script>
+
+  <!-- No zoom 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  -->
+
+  <!-- With zoom -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0>
+
+  <title>Raspberry Pi!!!</title>
+
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+
+<body>
+<H3>
+<center>
+
+<div class="btn-group btn-group-justified">
+    <div class="btn-group">
+      <button type="button" class="btn btn-lg btn-primary" onclick="getLocation();">
+      Log</button>
+    </div>
+    <div class="btn-group">
+      <button type="button" class="btn btn-lg btn-warning" onclick="setRepeat();" id="TrackButton">
+      Track</button>
+    </div>
+</div>
+<div class="form-group">
+    <label id="TrackingOnId">Tracking: off</label><br>
+    Tag: <input type="text" id="tagId"></input>
+</div>
+<p id="demo"></p>
+<p id="postFile"></p>
+<img id="RadarId" src="radar.png" width="50" /><br>
+<a href="maps/mapPath.html">Map Paths</a><br>
+<a href="lsToHtml.cgi?dir=tracker&ext=dat">Show Location Logs</a><br>
+</center>
+</H3>
+</body>
+
+<script> 
+var x = document.getElementById("demo");
+var y = document.getElementById("postFile");
+var trackingOn = false;
+var trackingCount = 0;
+var locationChangeEvent;
+var timeoutEvent;
+
+var options = { enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 2,
+                desiredAccuracy: 5 };
+
+function getLocation() {
+    if (navigator.geolocation) {
+
+        navigator.geolocation.getCurrentPosition(logPosition, errorHandler, options);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+    //$( "#RadarId" ).fadeOut(4000, "swing", function() { 
+    //    $("#RadarId").fadeIn(250,"swing");
+    //    });
+}
+
+function logLocation(lat, long, timeStamp, tag){
+    var urlWithArgs = "logLocation.cgi?Lat=" + lat + 
+                      "&Long=" + long + "&Time=" + timeStamp.getTime() +
+                      "&Tag=" + tag;
+    var str = "Logging location... ";
+    $.get(urlWithArgs, function(data, status) {
+        y.innerHTML = str+ status + "<br>" + data;
+    });
+}
+
+function logPosition(position) {
+    trackingCount++;
+    var str = "Lat:  " + position.coords.latitude +
+    "<br>Long: " + position.coords.longitude;
+    var date = new Date();
+    //str += "<br>" + date.toString();
+    str += "<br>" + date.toTimeString();
+    str += "<br>Collected " + trackingCount + " points.";
+    var tag = $("#tagId").val();
+    str += "<br>Tag: " + tag;
+    x.innerHTML = str;
+    logLocation(position.coords.latitude, position.coords.longitude, date, tag);
+}
+
+function setRepeat(){
+    if (!trackingOn)
+    {
+        trackingOn = true;
+        //trackingCount = 0;
+        //getLocation();
+        //timeoutEvent = setInterval(getLocation, 5000);
+
+        locationChangeEvent = navigator.geolocation.watchPosition(logPosition, errorHandler, options);
+        var btn = document.getElementById("TrackButton");
+        btn.className = "btn btn-lg btn-success";
+        $( "#TrackingOnId" ).text("Tracking: ON");
+        //$( "#TrackButton" ).text("ON");
+    } else {
+        trackingOn = false;
+        //clearTimeout(timeoutEvent);
+        navigator.geolocation.clearWatch(locationChangeEvent);
+        var btn = document.getElementById("TrackButton");
+        btn.className = "btn btn-lg btn-warning";
+        $( "#TrackingOnId" ).text("Tracking: off");
+        //$( "#TrackButton" ).text("off");
+    }
+}
+
+function errorHandler(error) {
+    x.innerHtlm = "Problem: <br>" + error.code;
+}
+</script>
+
+</html>

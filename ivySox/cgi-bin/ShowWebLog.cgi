@@ -1,5 +1,5 @@
 
-NLINES="$(util/GetProperty N $QUERY_STRING)"
+NLINES="$($UTIL/GetProperty N $QUERY_STRING)"
 
 if [ "$NLINES" = "" ]; then
   NLINES=150
