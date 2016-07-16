@@ -1,3 +1,0 @@
-echo 'Building Arg Parser'
-g++ -g -std=c++0x -o GetProperty GetProperty.cpp
-
