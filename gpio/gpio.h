@@ -46,8 +46,11 @@ extern volatile unsigned *gpio;
 #define INP_GPIO(g) *(gpio+((g)/10)) &= ~(7<<(((g)%10)*3))
 #define OUT_GPIO(g) *(gpio+((g)/10)) |=  (1<<(((g)%10)*3))
 #define SET_GPIO_ALT(g,a) *(gpio+(((g)/10))) |= (((a)<=3?(a)+4:(a)==4?3:2)<<(((g)%10)*3))
+//#define GPIO_GET(g) get_pin(g)
 
-#define GPIO_SET *(gpio+7)  // sets   bits which are 1 ignores bits which are 0
+#define GPIO_SET *(gpio+7)  // sets bits which are 1 ignores bits which are 0
+#define GPIO_GET(g) (*(gpio+13)&(1<<g)) // 0 if LOW, (1<<g) if HIGH
+//#define GPIO_GET *(gpio+13)
 #define GPIO_CLR *(gpio+10) // clears bits which are 1 ignores bits which are 0
 
 #define SET_PIN(g) GPIO_SET = 1 << g
@@ -58,5 +61,10 @@ extern volatile unsigned *gpio;
 void setup_io();
 void init_output(int g);
 void init_input(int g);
+void gpioExport(const int pin);
+void gpioUnexport(const int pin);
+int get_pin(const int g);
+
+
 
 #endif

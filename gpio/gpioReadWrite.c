@@ -20,8 +20,8 @@ char *pinString = NULL;
 
 void gpioRead(const int pin);
 void gpioWrite(const int pin, const int value);
-void gpioUnexport();
-void gpioExport();
+//void gpioUnexport();
+//void gpioExport();
 void showUsage();
 
 int main(int argc, char **argv)
@@ -53,6 +53,7 @@ int main(int argc, char **argv)
   return 0;
 }
 
+/*
 void gpioExport(const int pin)
 {
   int handle = open("/sys/class/gpio/export", O_WRONLY );
@@ -77,7 +78,7 @@ void gpioUnexport(const int pin)
   write(handle, pinString, strlen(pinString) );
   close(handle);
 }
-
+*/
 void gpioRead(const int pin)
 {
   char value[10];
@@ -97,6 +98,7 @@ void gpioRead(const int pin)
   printf(value);
   exit(0);
 }
+
 
 void gpioWrite(const int pin, const int value)
 {

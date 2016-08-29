@@ -5,7 +5,8 @@
 // Setup for gpio controls
 
 #include "gpio.h"
-
+#include <stdio.h>
+#include <string.h>
 
 int  mem_fd;
 char *gpio_mem, *gpio_map;
@@ -13,8 +14,6 @@ char *spi0_mem, *spi0_map;
 
 // I/O access
 volatile unsigned *gpio;
-
-
 //
 // Set up a memory regions to access GPIO
 //
@@ -49,6 +48,8 @@ void setup_io()
       GPIO_BASE
    );
 
+   close(mem_fd);
+
    if ((long)gpio_map < 0) {
       printf("mmap error %d\n", (int)gpio_map);
       exit (-1);
@@ -69,4 +70,56 @@ void init_output(int g)
 void init_input(int g)
 {
     INP_GPIO(g);
+}
+
+void gpioExport(const int pin)
+{
+  char pinString[10];
+  sprintf(pinString, "%d", pin);
+  int handle = open("/sys/class/gpio/export", O_WRONLY );
+  if (handle < 0)
+  {
+    printf("handle = %d", &handle);
+    printf("Error exporting pin!\n\n");
+    //exit(-1);
+  }
+  write(handle, pinString, strlen(pinString) );
+  close(handle);
+}
+
+void gpioUnexport(const int pin)
+{
+  char pinString[10];
+  sprintf(pinString, "%d", pin);
+
+  int handle = open("/sys/class/gpio/unexport", O_WRONLY );
+  if (handle < 0)
+  {
+    printf("Error unexporting pin!");
+    //exit(-1);
+  }
+  write(handle, pinString, strlen(pinString) );
+  close(handle);
+}
+
+int get_pin(const int g)
+{
+  char pinString[10];
+  sprintf(pinString, "%d", g);
+
+  char value[10];
+  char filename[80];
+  int handle = -1;
+  gpioExport(g);
+  strcpy(filename, "/sys/class/gpio/gpio");
+  strcat(filename, pinString);
+  strcat(filename, "/value");
+  handle = open(filename, O_RDONLY);
+  if ( handle < 1 )
+  {
+    printf("Error reading from pin");
+    //exit(-1);
+  }
+  read(handle, value, 10);
+  return atoi(value);
 }
