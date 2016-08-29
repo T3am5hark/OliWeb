@@ -68,7 +68,7 @@ int main(int argc, char **argv)
     setup_io();
     init_output(signalPin);
     // Wait a short time
-    usleep(100*1000);
+    usleep(50*1000);
 
     for (rep=0; rep<repCount; rep++)
     {
