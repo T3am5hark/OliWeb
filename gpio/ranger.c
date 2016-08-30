@@ -16,6 +16,7 @@
 void showHelp();
 void sendInitiatingPulse();
 time_t detectReturn();
+int time_diff(struct timeval *x , struct timeval *y);
 
 int signalPin, echoPin;
 time_t initPulseLengthUs = 10;     // initiation pulse uS
@@ -46,6 +47,15 @@ int timeval_subtract(struct timeval *result, struct timeval *x, struct timeval *
     return result->tv_sec < 0;
 }
 
+int time_diff(struct timeval *x, struct timeval *y)
+{
+    long int x_us , y_us , diff;
+    x_us = x->tv_sec*1000000 + x->tv_usec;
+    y_us = y->tv_sec*1000000 + y->tv_usec;
+    diff = y_us - x_us;
+    return (int)diff;
+}
+
 
 int main(int argc, char **argv)
 {
@@ -67,15 +77,16 @@ int main(int argc, char **argv)
     // Set up gpi pointer for direct register access
     setup_io();
     init_output(signalPin);
+    CLR_PIN( signalPin );
     // Wait a short time
-    usleep(50*1000);
+    usleep(100*1000);
 
     for (rep=0; rep<repCount; rep++)
     {
       echoReturnTime = detectReturn();
       printf("%d\n", echoReturnTime);
-      // 20ms delay between readings minimum
-      usleep(20*1000);
+      // 50ms delay between readings minimum
+      usleep(100*1000);
     }
     CLR_PIN( signalPin );
     return 0;
@@ -90,7 +101,7 @@ void sendInitiatingPulse()
     SET_PIN( signalPin );
     usleep(initPulseLengthUs);
     CLR_PIN( signalPin );
-    usleep(initPulseLengthUs);
+    //usleep(100);
 }
 
 int pulseIn(const int pin)
@@ -110,31 +121,44 @@ int pulseIn(const int pin)
         // Detect rising edge
         if (pinValue > 0)
         {
-            printf("Up\n");
+            //printf("Up\n");
+            i = 0;
             gettimeofday(&start, NULL);
             // Now wait for falling edge
             while (pinValue > 0 && durationUs < waitTimeNoReturn)
             {
                 usleepReturn=usleep(waitTimeUs);
-                if (usleepReturn < 0 ) { printf("error1 %d\n", errno); continue; }
-                errCode=gettimeofday(&now, NULL);
-                timeval_subtract(&diff, &now, &start);
-                durationUs = (diff.tv_usec);
+                if (i%10 == 0){
+                    errCode=gettimeofday(&now, NULL);
+                    //timeval_subtract(&diff, &now, &start);
+                    //durationUs = (diff.tv_usec);
+                    durationUs = time_diff(&start, &now);
+                }
+                i++;
                 pinValue = GPIO_GET(echoPin);
             }
             if (pinValue == 0)
             {
-                printf("Down!\n");
+                errCode=gettimeofday(&now, NULL);
+                //timeval_subtract(&diff, &now, &start);
+                //durationUs = (diff.tv_usec);
+                durationUs = time_diff(&start, &now);
+
+                //printf("Down!\n");
+                //printf("i=%d\n", i);
+                //printf("%d uS\n", i*waitTimeUs);
+                //printf("measuredDuration = %d\n", durationUs);
+
                 return durationUs;
             }
         }
         usleepReturn=usleep(waitTimeUs);
         errCode=gettimeofday(&now, NULL);
-        timeval_subtract(&diff, &now, &start);
-        durationUs = diff.tv_usec;
+        //timeval_subtract(&diff, &now, &start);
+        //durationUs = diff.tv_usec;
+        durationUs = time_diff(&start, &now);
         i++;
     }
-    printf("i=%d\n", i);
     return -durationUs;
 }
 
