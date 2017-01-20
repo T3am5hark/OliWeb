@@ -32,7 +32,8 @@ int main(int argc, char **argv)
   // number of reps
   if (argc > 3) repCount=atoi( argv[3] );
   // pulse width duty cycle
-  if (argc > 4) dutyCycle=(double)(atoi(argv[4])/100.0);
+  //if (argc > 4) dutyCycle=(double)(atoi(argv[4])/100.0);
+  if (argc > 4) dutyCycle=(double)atof(argv[4])/100.0;
 
   if (dutyCycle > 1.0) dutyCycle = 1.0;
   if (dutyCycle < 0.0) dutyCycle = 0.0;
