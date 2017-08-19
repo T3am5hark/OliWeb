@@ -30,7 +30,7 @@ case $1 in
 		echo "$OLIWEB $CONFIGFILE &"
 		#log_daemon_msg "Starting OliWeb server" "oliweb"
 		#tmp="$($OLIWEB $CONFIGFILE &)"
-                /usr/local/bin/OliWeb /usr/local/bin/OliWebConfig.xml &
+                $OLIWEB $CONFIGFILE &
 		#if [ -z "$UGID" ]; then
 		#	log_failure_msg "user \"$RUNASUSER\" does not exist"
 		#	exit 1
