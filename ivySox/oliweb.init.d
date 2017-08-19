@@ -9,14 +9,12 @@
 # Short-Description: OliWeb Server Start
 ### END INIT INFO
 
-#PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin:/usr/local
-
 #. /lib/lsb/init-functions
 
 #DAEMON=/usr/sbin/ntpd
 #PIDFILE=/var/run/ntpd.pid
-OLIWEB="/usr/local/bin/OliWeb"
-CONFIGFILE="/usr/local/bin/OliWebConfig.xml"
+OLIWEB="/opt/OliWeb/OliWeb"
+CONFIGFILE="/opt/OliWeb/OliWebConfig.xml"
 
 #test -x $OLIWEB || exit 5
 
