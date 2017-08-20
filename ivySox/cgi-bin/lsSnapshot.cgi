@@ -5,7 +5,7 @@ echo 'Contents of snapshot directory:<br><br>'
 echo '</H2>'
 
 echo '<H3>'
-cd web/snapshot
+cd $WEB/snapshot
 #ALLFILES=snapshot/*.jpeg
 ALLFILES=*.jpeg
 
