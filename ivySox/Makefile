@@ -13,7 +13,7 @@ SOURCE	= 	IvySox.cpp OliWeb.cpp main.cpp ../tinyxml/tinyxml2.cpp
 OBJ 	=	$(SOURCE:.cpp=.o)
 LIBS	=	-lpthread
 
-all:		OliWeb GetProperty install
+all:		OliWeb GetProperty local_install
 
 OliWeb:		$(OBJ)
 		@echo [Link]
@@ -22,7 +22,7 @@ OliWeb:		$(OBJ)
 GetProperty:
 		@cd ../GetQueryArgs;make all
 
-.cpp.o:		
+.cpp.o:
 		@echo [Compile] $<
 		@$(CC) -c $(FLAGS) $< -o $@
 
@@ -31,8 +31,13 @@ clean:
 		@rm -f $(OBJ) OliWeb
 		@cd ../GetQueryArgs;make clean
 
-install:
-		@echo "[Install]"
+local_install:
+		@echo "[Local Install]"
 		@chmod 775 cgi-bin/*.cgi
 		@chmod 775 util/*.*
 		@chmod 775 util/*
+		@echo "Use sudo make install to activate on boot"
+
+install:
+		@echo "[Install]"
+		@./install.sh
